@@ -1,0 +1,304 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // url      = env("DATABASE_URL")
+}
+
+//
+// =========================
+// ENUMS
+// =========================
+//
+
+enum Role {
+  ADMIN
+  INSTRUCTOR
+  STUDENT
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  PAYPAL
+  BANK_TRANSFER
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+//
+// =========================
+// AUTH MODELS
+// =========================
+//
+
+model User {
+  id        String  @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String  @unique
+  password  String
+  role      Role
+  isActive  Boolean @default(true)
+
+  student    Student?
+  instructor Instructor?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Student {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  phone        String?
+  profileImage String?
+  gender       Gender?
+  dateOfBirth  DateTime?
+
+  enrollments  Enrollment[]
+  reviews      Review[]
+  testimonials Testimonial[]
+
+  createdById String?
+  updatedById String?
+  isDeleted   Boolean @default(false)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  payments  Payment[]
+}
+
+model Instructor {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  image String?
+  bio   String?
+
+  courses Course[]
+
+  createdById String?
+  updatedById String?
+  isDeleted   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//
+// =========================
+// COURSE MODELS
+// =========================
+//
+
+model CourseCategory {
+  id    String  @id @default(cuid())
+  name  String
+  slug  String  @unique
+  image String?
+
+  courses Course[]
+
+  createdById String?
+  updatedById String?
+  isDeleted   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Course {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  description String
+  content     String
+  duration    String?
+  image       String?
+  status      Status    @default(ACTIVE)
+  dateUpdated DateTime?
+
+  categoryId String
+  category   CourseCategory @relation(fields: [categoryId], references: [id])
+
+  instructorId String
+  instructor   Instructor @relation(fields: [instructorId], references: [id])
+
+  curriculum  Curriculum[]
+  enrollments Enrollment[]
+  reviews     Review[]
+
+  createdById String?
+  updatedById String?
+  isDeleted   Boolean @default(false)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  payments  Payment[]
+}
+
+model Curriculum {
+  id    String @id @default(cuid())
+  title String
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  lessons Lesson[]
+
+  createdById String?
+  updatedById String?
+  isDeleted   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lesson {
+  id       String @id @default(cuid())
+  title    String
+  duration String
+
+  curriculumId String
+  curriculum   Curriculum @relation(fields: [curriculumId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//
+// =========================
+// BLOG MODELS
+// =========================
+//
+
+model BlogCategory {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  blogs Blog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Blog {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  description String
+  content     String
+  image       String?
+  tags        String[]
+  status      PublishStatus @default(DRAFT)
+
+  categoryId String
+  category   BlogCategory @relation(fields: [categoryId], references: [id])
+
+  createdById String?
+  updatedById String?
+  isDeleted   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//
+// =========================
+// ENROLLMENT & PAYMENT
+// =========================
+//
+
+model Enrollment {
+  id String @id @default(cuid())
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  status      EnrollmentStatus @default(ACTIVE)
+  progress    Int              @default(0)
+  completedAt DateTime?
+
+  payments Payment[]
+
+  enrolledAt DateTime @default(now())
+}
+
+model Payment {
+  id String @id @default(cuid())
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  amount        Float
+  paymentMethod PaymentMethod
+  transactionId String        @unique
+  status        PaymentStatus @default(PENDING)
+  paidAt        DateTime?
+
+  createdAt    DateTime    @default(now())
+  enrollment   Enrollment? @relation(fields: [enrollmentId], references: [id])
+  enrollmentId String?
+}
+
+model Review {
+  id      String  @id @default(cuid())
+  rating  Int
+  comment String?
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Testimonial {
+  id          String  @id @default(cuid())
+  studentId   String
+  student     Student @relation(fields: [studentId], references: [id])
+  description String
+
+  createdAt DateTime @default(now())
+}
