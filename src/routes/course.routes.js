@@ -4,7 +4,7 @@ const courseController = require("../controllers/course.controller");
 const { protect, authorize } = require("../middlewares/auth.middleware");
 const { INSTRUCTOR, ADMIN } = require("../constants/roles");
 
-router.get("/", courseController.getCourses);
+router.get("/", protect, authorize(ADMIN), courseController.getCourses);
 
 router.post(
   "/",
