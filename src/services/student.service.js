@@ -1,10 +1,12 @@
 const prisma = require("../config/prisma");
 const bcrypt = require("bcrypt");
+
 const ApiError = require("../utils/ApiError");
+const { default: toUTCDate } = require("../utils/toUTC");
 const generateToken = require("../utils/generateToken");
 const { STUDENT } = require("../constants/roles");
 
-const createUser = async (data) => {
+const createStudent = async (data) => {
   const existing = await prisma.user.findUnique({
     where: { email: data.email },
   });
@@ -20,6 +22,17 @@ const createUser = async (data) => {
       email: data.email,
       password: hashedPassword,
       role: STUDENT,
+      student: {
+        create: {
+          phone: data.phone,
+          gender: data.gender.toUpperCase(),
+          dateOfBirth: toUTCDate(data.dateOfBirth),
+          image: data.image || null,
+        },
+      },
+    },
+    include: {
+      student: true,
     },
   });
 
@@ -28,18 +41,4 @@ const createUser = async (data) => {
   return { user, token };
 };
 
-const login = async (email, password) => {
-  const user = await prisma.user.findUnique({ where: { email } });
-
-  if (!user) throw new ApiError(400, "User not found");
-
-  const isMatch = await bcrypt.compare(password, user.password);
-
-  if (!isMatch) throw new ApiError(400, "Invalid Password");
-
-  const token = generateToken(user);
-
-  return { user, token };
-};
-
-module.exports = { createUser, login };
+module.exports = { createStudent };

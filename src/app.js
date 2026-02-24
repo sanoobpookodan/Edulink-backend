@@ -17,8 +17,9 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(upload.none());
 app.use(cookieParser());
+// app.use(upload.none());
+app.use("/uploads", express.static("uploads"));
 
 // Use routes
 app.use("/api/auth", authRoutes);

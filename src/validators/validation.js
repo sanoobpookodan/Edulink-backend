@@ -22,7 +22,7 @@ const registerValidation = (isStudent) => {
     { field: "phone", type: "notEmpty" },
     isStudent && { field: "gender", type: "notEmpty" },
     { field: "dateOfBirth", type: "date" },
-  ].filter(Boolean); // Remove falsey values (like the gender rule for instructors)
+  ].filter(Boolean); // Remove falsey values
   const validators = buildValidators(rules);
   return [...validators, generateFormError];
 };

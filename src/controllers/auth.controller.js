@@ -1,10 +1,24 @@
-const { validationResult } = require("express-validator");
 const authService = require("../services/auth.service");
-const generateFormError = require("../utils/generateFormError");
+const studService = require("../services/student.service");
 
-const register = async (req, res, next) => {
+const student_register = async (req, res, next) => {
   try {
-    const data = await authService.REGISTER(req.body);
+    const imagePath = req.file?.path || null;
+    const data = await studService.createStudent({
+      ...req.body,
+      image: imagePath,
+    });
+    res
+      .status(201)
+      .json({ success: true, data: { user: data.user, token: data.token } });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const instructor_register = async (req, res, next) => {
+  try {
+    const data = await authService.userCreation(req.body);
     res
       .status(201)
       .json({ success: true, data: { user: data.user, token: data.token } });
@@ -22,4 +36,4 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login };
+module.exports = { student_register, instructor_register, login };
