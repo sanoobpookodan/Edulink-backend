@@ -1,4 +1,3 @@
-const { protect, authorize } = require("../middlewares/auth.middleware");
 const courseService = require("../services/course.service");
 
 const createCourse = async (req, res, next) => {

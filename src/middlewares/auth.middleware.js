@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const prisma = require("../config/prisma");
 const ApiError = require("../utils/ApiError");
 
-const protect = async (req, res, next) => {
+const requireAuth = async (req, res, next) => {
   let token;
 
   if (req.headers.authorization?.startsWith("Bearer")) {
@@ -35,4 +35,4 @@ const authorize = (...roles) => {
   };
 };
 
-module.exports = { protect, authorize };
+module.exports = { requireAuth, authorize };

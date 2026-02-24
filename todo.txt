@@ -1,3 +1,12 @@
+
+| Package       | Purpose                          |
+| ------------- | -------------------------------- |
+| express       | Create server and routes         |
+| cors          | Allow frontend to access backend |
+| cookie-parser | Read cookies                     |
+| morgan        | Log requests                     |
+
+
 4️⃣ Core LMS Modules
 🔹 User Module
 
@@ -6,6 +15,7 @@ Create user
 Assign role
 
 Profile relation
+
 
 🔹 Course Module
 
