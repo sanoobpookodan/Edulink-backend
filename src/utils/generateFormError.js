@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator");
 
-const generateFormError = (req, res) => {
+const generateFormError = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -11,6 +11,7 @@ const generateFormError = (req, res) => {
       })),
     });
   }
+  next();
 };
 
 module.exports = generateFormError;
