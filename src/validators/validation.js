@@ -1,19 +1,17 @@
-const generateFormError = require("../utils/generateFormError");
-const buildValidators = require("./buildValidators");
+import generateFormError from "../utils/generateFormError.js";
+import buildValidators from "./buildValidators.js";
 
-const authValidation = () => {
+export const authValidation = () => {
   const rules = [
     { field: "email", type: "email" },
-    {
-      field: "password",
-      type: "notEmpty",
-    },
+    { field: "password", type: "notEmpty" },
   ];
+
   const validators = buildValidators(rules);
   return [...validators, generateFormError];
 };
 
-const registerValidation = (isStudent) => {
+export const registerValidation = (isStudent) => {
   const rules = [
     { field: "firstName", type: "notEmpty" },
     { field: "lastName", type: "notEmpty" },
@@ -22,12 +20,8 @@ const registerValidation = (isStudent) => {
     { field: "phone", type: "notEmpty" },
     isStudent && { field: "gender", type: "notEmpty" },
     { field: "dateOfBirth", type: "date" },
-  ].filter(Boolean); // Remove falsey values
+  ].filter(Boolean);
+
   const validators = buildValidators(rules);
   return [...validators, generateFormError];
-};
-
-module.exports = {
-  authValidation,
-  registerValidation,
 };

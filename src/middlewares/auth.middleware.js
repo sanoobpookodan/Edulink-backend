@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const prisma = require("../config/prisma");
-const ApiError = require("../utils/ApiError");
+import jwt from "jsonwebtoken";
+import prisma from "../config/prisma.js";
+import ApiError from "../utils/ApiError.js";
 
 const requireAuth = async (req, res, next) => {
   let token;
@@ -15,10 +15,13 @@ const requireAuth = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
     const user = await prisma.user.findUnique({
       where: { id: decoded.id },
     });
+
     if (!user) return next(new ApiError(401, "User not found"));
+
     req.user = user;
     next();
   } catch (error) {
@@ -35,4 +38,4 @@ const authorize = (...roles) => {
   };
 };
 
-module.exports = { requireAuth, authorize };
+export { requireAuth, authorize };

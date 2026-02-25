@@ -1,36 +1,40 @@
-const express = require("express");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const morgan = require("morgan");
-const multer = require("multer");
-const upload = multer();
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import morgan from "morgan";
+import multer from "multer";
+import dotenv from "dotenv";
 
-const authRoutes = require("./routes/auth.routes");
-const courseRoutes = require("./routes/course.routes");
-const errorMiddleware = require("./middlewares/error.middleware");
-const ApiError = require("./utils/ApiError");
+import authRoutes from "./routes/auth.routes.js";
+import courseRoutes from "./routes/course.routes.js";
+import errorMiddleware from "./middlewares/error.middleware.js";
+import ApiError from "./utils/ApiError.js";
 
 const app = express();
+const multipartParser = multer();
+dotenv.config();
 
+console.log("DATABASE_URL:", process.env.DATABASE_URL, "===");
 // Middleware setup
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-// app.use(upload.none());
-app.use("/uploads", express.static("uploads"));
 
-// Use routes
+app.use(multipartParser.none());
+app.use(cookieParser());
+app.use("/uploads", express.static("public/uploads"));
+
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 
-// 404 routes
+// 404 handler
 app.use((req, res, next) => {
-  next(new ApiError(404, "Route not found"));
+  next(new ApiError(404, "Route not found 404"));
 });
 
-// Error handling middleware (should be last)
+// Error middleware (must be last)
 app.use(errorMiddleware);
 
-module.exports = app;
+export default app;

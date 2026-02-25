@@ -1,11 +1,12 @@
-const express = require("express");
+import express from "express";
+import * as courseController from "../controllers/course.controller.js";
+import { requireAuth, authorize } from "../middlewares/auth.middleware.js";
+import { INSTRUCTOR, ADMIN } from "../constants/roles.js";
+
 const router = express.Router();
-const courseController = require("../controllers/course.controller");
-const { requireAuth, authorize } = require("../middlewares/auth.middleware");
-const { INSTRUCTOR, ADMIN } = require("../constants/roles");
 
 router.get("/", courseController.getCourses);
 
 router.post("/", requireAuth, courseController.createCourse);
 
-module.exports = router;
+export default router;

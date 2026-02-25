@@ -1,14 +1,20 @@
-const { body } = require("express-validator");
+import { body } from "express-validator";
 
 function buildValidators(rules = []) {
   return rules.map((rule) => {
     let validator = body(rule.field);
     let message;
+
     switch (rule.type) {
       case "notEmpty":
         message =
           rule.message ||
-          `${rule.field ? rule.field.charAt(0).toUpperCase() + rule.field.slice(1) : "Field"} is required`;
+          `${
+            rule.field
+              ? rule.field.charAt(0).toUpperCase() + rule.field.slice(1)
+              : "Field"
+          } is required`;
+
         validator = validator.trim().notEmpty().withMessage(message);
         break;
 
@@ -16,8 +22,17 @@ function buildValidators(rules = []) {
         message =
           rule.message ||
           (rule.min == rule.max
-            ? `${rule.field ? rule.field.charAt(0).toUpperCase() + rule.field.slice(1) : "Field"} must be ${rule.min} characters`
-            : `${rule.field ? rule.field.charAt(0).toUpperCase() + rule.field.slice(1) : "Field"} must be between ${rule.min} and ${rule.max} characters`);
+            ? `${
+                rule.field
+                  ? rule.field.charAt(0).toUpperCase() + rule.field.slice(1)
+                  : "Field"
+              } must be ${rule.min} characters`
+            : `${
+                rule.field
+                  ? rule.field.charAt(0).toUpperCase() + rule.field.slice(1)
+                  : "Field"
+              } must be between ${rule.min} and ${rule.max} characters`);
+
         validator = validator
           .isLength({ min: rule.min, max: rule.max })
           .withMessage(message);
@@ -31,6 +46,7 @@ function buildValidators(rules = []) {
           .isMobilePhone("en-IN")
           .withMessage("Invalid phone number");
         break;
+
       case "email":
         validator = validator
           .notEmpty()
@@ -39,8 +55,10 @@ function buildValidators(rules = []) {
           .isEmail()
           .withMessage("Invalid email");
         break;
+
       case "date":
         message = rule.message || "Date must be in yyyy-mm-dd format";
+
         validator = validator
           .notEmpty()
           .withMessage("Date of birth is required")
@@ -48,6 +66,7 @@ function buildValidators(rules = []) {
           .matches(/^\d{4}-\d{2}-\d{2}$/)
           .withMessage(message);
         break;
+
       default:
         throw new Error(`Unknown validation type: ${rule.type}`);
     }
@@ -56,4 +75,4 @@ function buildValidators(rules = []) {
   });
 }
 
-module.exports = buildValidators;
+export default buildValidators;

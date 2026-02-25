@@ -1,23 +1,34 @@
-const express = require("express");
+import express from "express";
+import createUploader from "../middlewares/upload.js";
+// validations
+import {
+  authValidation,
+  registerValidation,
+} from "../validators/validation.js";
+
+// controllers
+import {
+  login,
+  registerStudent,
+  registerInstructor,
+} from "../controllers/auth.controller.js";
 const router = express.Router();
-const authController = require("../controllers/auth.controller");
-const validation = require("../validators/validation");
-const createUploader = require("../middlewares/upload");
+
 const uploadUser = createUploader("users");
 
-router.post("/login", validation.authValidation(), authController.login);
+router.post("/login", authValidation(), login);
 
 router.post(
   "/student-register",
   uploadUser.single("image"),
-  validation.registerValidation(true),
-  authController.student_register,
+  registerValidation(true),
+  registerStudent,
 );
 
 router.post(
   "/instructor-register",
-  validation.registerValidation(),
-  authController.instructor_register,
+  registerValidation(false),
+  registerInstructor,
 );
 
-module.exports = router;
+export default router;

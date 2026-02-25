@@ -1,39 +1,39 @@
-const authService = require("../services/auth.service");
-const studService = require("../services/student.service");
+import { loginUser } from "../services/auth.service.js";
+import { createStudent } from "../services/student.service.js";
 
-const student_register = async (req, res, next) => {
+export const login = async (req, res, next) => {
+  try {
+    const data = await loginUser(req.body.email, req.body.password);
+    res.json({
+      success: true,
+      data: { user: data.user, token: data.token },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const registerStudent = async (req, res, next) => {
   try {
     const imagePath = req.file?.path || null;
-    const data = await studService.createStudent({
+
+    const data = await createStudent({
       ...req.body,
       image: imagePath,
     });
-    res
-      .status(201)
-      .json({ success: true, data: { user: data.user, token: data.token } });
+
+    res.status(201).json({
+      success: true,
+      data: { user: data.user, token: data.token },
+    });
   } catch (err) {
     next(err);
   }
 };
 
-const instructor_register = async (req, res, next) => {
+export const registerInstructor = async (req, res, next) => {
   try {
-    const data = await authService.userCreation(req.body);
-    res
-      .status(201)
-      .json({ success: true, data: { user: data.user, token: data.token } });
   } catch (err) {
     next(err);
   }
 };
-
-const login = async (req, res, next) => {
-  try {
-    const data = await authService.login(req.body.email, req.body.password);
-    res.json({ success: true, data: { user: data.user, token: data.token } });
-  } catch (err) {
-    next(err);
-  }
-};
-
-module.exports = { student_register, instructor_register, login };

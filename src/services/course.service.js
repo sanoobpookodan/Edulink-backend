@@ -1,4 +1,4 @@
-const prisma = require("../config/prisma");
+import prisma from "../config/prisma.js";
 
 const createCourse = async (data, instructorId) => {
   return prisma.course.create({
@@ -17,4 +17,4 @@ const getAllCourses = async () => {
   });
 };
 
-module.exports = { createCourse, getAllCourses };
+export default { createCourse, getAllCourses };

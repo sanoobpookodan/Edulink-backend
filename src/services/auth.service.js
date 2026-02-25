@@ -1,8 +1,8 @@
-const prisma = require("../config/prisma");
-const bcrypt = require("bcrypt");
-const ApiError = require("../utils/ApiError");
-const generateToken = require("../utils/generateToken");
-const { STUDENT } = require("../constants/roles");
+import prisma from "../config/prisma.js";
+import bcrypt from "bcrypt";
+import ApiError from "../utils/ApiError.js";
+import generateToken from "../utils/generateToken.js";
+import { STUDENT } from "../constants/roles.js";
 
 const createUser = async (data) => {
   const existing = await prisma.user.findUnique({
@@ -28,8 +28,10 @@ const createUser = async (data) => {
   return { user, token };
 };
 
-const login = async (email, password) => {
-  const user = await prisma.user.findUnique({ where: { email } });
+const loginUser = async (email, password) => {
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
 
   if (!user) throw new ApiError(400, "User not found");
 
@@ -42,4 +44,4 @@ const login = async (email, password) => {
   return { user, token };
 };
 
-module.exports = { createUser, login };
+export { createUser, loginUser };

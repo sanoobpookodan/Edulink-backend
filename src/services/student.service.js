@@ -1,10 +1,10 @@
-const prisma = require("../config/prisma");
-const bcrypt = require("bcrypt");
+import prisma from "../config/prisma.js";
+import bcrypt from "bcrypt";
 
-const ApiError = require("../utils/ApiError");
-const { default: toUTCDate } = require("../utils/toUTC");
-const generateToken = require("../utils/generateToken");
-const { STUDENT } = require("../constants/roles");
+import ApiError from "../utils/ApiError.js";
+import toUTCDate from "../utils/toUTC.js";
+import generateToken from "../utils/generateToken.js";
+import { STUDENT } from "../constants/roles.js";
 
 const createStudent = async (data) => {
   const existing = await prisma.user.findUnique({
@@ -41,4 +41,4 @@ const createStudent = async (data) => {
   return { user, token };
 };
 
-module.exports = { createStudent };
+export { createStudent };
