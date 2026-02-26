@@ -6,6 +6,17 @@ function buildValidators(rules = []) {
     let message;
 
     switch (rule.type) {
+      case "fileRequired":
+        validator = validator.custom((value, { req }) => {
+          if (!req.file) {
+            throw new Error(
+              rule.message ||
+                `${rule.field.charAt(0).toUpperCase() + rule.field.slice(1)} is required`,
+            );
+          }
+          return true;
+        });
+        break;
       case "notEmpty":
         message =
           rule.message ||

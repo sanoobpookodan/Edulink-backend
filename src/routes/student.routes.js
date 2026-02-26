@@ -1,35 +1,39 @@
 import express from "express";
 import createUploader from "../middlewares/upload.middleware.js";
+// validations
+import {
+  authValidation,
+  registerValidation,
+  updateValidation,
+} from "../validators/validation.js";
 // controllers
 import {
   login,
-  signUpStudent,
+  registerStudent,
   registerInstructor,
 } from "../controllers/auth.controller.js";
-// validations
-import { loginValidation } from "../validators/auth.validator.js";
 // middlewares
 import { authenticate, authorize } from "../middlewares/auth.middleware.js";
 // roles
 import { ADMIN, STUDENT } from "../constants/roles.js";
-import { createStudentValidation } from "../validators/student.validator.js";
 
 const router = express.Router();
 
 const uploadUser = createUploader("users");
 
-router.post("/login", loginValidation(), login);
-
 router.post(
-  "/signup-student",
+  "/update-student",
+  authenticate,
+  authorize(ADMIN, STUDENT),
   uploadUser.single("image"),
-  createStudentValidation(),
-  signUpStudent,
+  updateValidation(true),
+  updateStudent,
 );
 
 router.post(
-  "/signup-instructor",
+  "/instructor-register",
   uploadUser.single("image"),
+  registerValidation(false),
   registerInstructor,
 );
 

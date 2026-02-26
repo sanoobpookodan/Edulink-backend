@@ -67,36 +67,40 @@ model User {
   email     String  @unique
   password  String
   role      Role
-  isActive  Boolean @default(true)
+  isActive  Boolean @default(false)
 
-  student    Student?
+  student    Student?    @relation("UserStudent")
   instructor Instructor?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  studentsCreated Student[] @relation("StudentCreatedBy")
+  studentsUpdated Student[] @relation("StudentUpdatedBy")
 }
 
 model Student {
   id     String @id @default(uuid())
   userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation("UserStudent", fields: [userId], references: [id], onDelete: Cascade)
 
   phone       String?
   image       String?
   gender      Gender?
   dateOfBirth DateTime?
 
+  createdById String?
+  createdBy   User?   @relation("StudentCreatedBy", fields: [createdById], references: [id], onDelete: Cascade)
+  updatedById String?
+  updatedBy   User?   @relation("StudentUpdatedBy", fields: [updatedById], references: [id], onDelete: Cascade)
+  isDeleted   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   enrollments  Enrollment[]
   reviews      Review[]
   testimonials Testimonial[]
-
-  createdById String?
-  updatedById String?
-  isDeleted   Boolean @default(false)
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  payments  Payment[]
+  payments     Payment[]
 }
 
 model Instructor {
