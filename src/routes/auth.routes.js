@@ -8,10 +8,7 @@ import {
 } from "../controllers/auth.controller.js";
 // validations
 import { loginValidation } from "../validators/auth.validator.js";
-// middlewares
-import { authenticate, authorize } from "../middlewares/auth.middleware.js";
 // roles
-import { ADMIN, STUDENT } from "../constants/roles.js";
 import { createStudentValidation } from "../validators/student.validator.js";
 import { createInstructorValidation } from "../validators/instructor.validator.js";
 

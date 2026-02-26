@@ -6,6 +6,14 @@ function buildValidators(rules = []) {
     let message;
 
     switch (rule.type) {
+      case "gender":
+        validator = validator
+          .notEmpty()
+          .withMessage("Gender is required")
+          .bail()
+          .isIn(["male", "female", "other"])
+          .withMessage("Gender must be 'male', 'female' or 'other'");
+        break;
       case "fileRequired":
         validator = validator.custom((value, { req }) => {
           if (!req.file) {
@@ -72,7 +80,7 @@ function buildValidators(rules = []) {
 
         validator = validator
           .notEmpty()
-          .withMessage("Date of birth is required")
+          .withMessage("Date is required")
           .bail()
           .matches(/^\d{4}-\d{2}-\d{2}$/)
           .withMessage(message);

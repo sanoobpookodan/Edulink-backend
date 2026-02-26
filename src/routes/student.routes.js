@@ -33,8 +33,8 @@ router.patch(
   "/:id",
   authenticate,
   authorize(ADMIN, STUDENT),
-  updateStudentValidation(),
   uploadUser.single("image"),
+  updateStudentValidation(),
   updateStudent,
 );
 

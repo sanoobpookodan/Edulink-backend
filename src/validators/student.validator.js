@@ -8,7 +8,7 @@ export const createStudentValidation = () => {
     { field: "email", type: "email" },
     { field: "password", type: "notEmpty" },
     { field: "phone", type: "notEmpty" },
-    { field: "gender", type: "notEmpty" },
+    { field: "gender", type: "gender" },
     { field: "dateOfBirth", type: "date" },
   ];
 
@@ -21,7 +21,7 @@ export const updateStudentValidation = () => {
     { field: "lastName", type: "notEmpty" },
     { field: "email", type: "email" },
     { field: "phone", type: "notEmpty" },
-    { field: "gender", type: "notEmpty" },
+    { field: "gender", type: "gender" },
     { field: "dateOfBirth", type: "date" },
   ];
 

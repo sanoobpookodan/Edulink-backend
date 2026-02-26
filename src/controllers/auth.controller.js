@@ -11,6 +11,7 @@ export const login = async (req, res, next) => {
     const formatted = userSerializer(data.user);
     res.json({
       success: true,
+      message: "Login successfully",
       data: { user: formatted, token: data.token },
     });
   } catch (err) {
@@ -27,9 +28,11 @@ export const signUpStudent = async (req, res, next) => {
       image: imagePath,
       user: user,
     });
+    const formatted = userSerializer(data);
     res.status(201).json({
       success: true,
-      data,
+      message: "Student created successfully",
+      data: formatted,
     });
   } catch (err) {
     next(err);
@@ -45,9 +48,11 @@ export const signUpInstructor = async (req, res, next) => {
       image: imagePath,
       user: user,
     });
+    const formatted = userSerializer(data);
     res.status(201).json({
       success: true,
-      data,
+      message: "Instructor created successfully",
+      data: formatted,
     });
   } catch (err) {
     next(err);
