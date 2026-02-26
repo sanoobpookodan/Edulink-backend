@@ -1,4 +1,8 @@
-import { loginUser, createStudent } from "../services/auth.service.js";
+import {
+  loginUser,
+  createStudent,
+  createInstructor,
+} from "../services/auth.service.js";
 
 export const login = async (req, res, next) => {
   try {
@@ -30,8 +34,19 @@ export const signUpStudent = async (req, res, next) => {
   }
 };
 
-export const registerInstructor = async (req, res, next) => {
+export const signUpInstructor = async (req, res, next) => {
   try {
+    const imagePath = req.fileUrl || undefined;
+    const user = req.user;
+    const data = await createInstructor({
+      ...req.body,
+      image: imagePath,
+      user: user,
+    });
+    res.status(201).json({
+      success: true,
+      data,
+    });
   } catch (err) {
     next(err);
   }

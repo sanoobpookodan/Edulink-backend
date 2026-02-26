@@ -4,7 +4,7 @@ import createUploader from "../middlewares/upload.middleware.js";
 import {
   login,
   signUpStudent,
-  registerInstructor,
+  signUpInstructor,
 } from "../controllers/auth.controller.js";
 // validations
 import { loginValidation } from "../validators/auth.validator.js";
@@ -13,6 +13,7 @@ import { authenticate, authorize } from "../middlewares/auth.middleware.js";
 // roles
 import { ADMIN, STUDENT } from "../constants/roles.js";
 import { createStudentValidation } from "../validators/student.validator.js";
+import { createInstructorValidation } from "../validators/instructor.validator.js";
 
 const router = express.Router();
 
@@ -30,7 +31,8 @@ router.post(
 router.post(
   "/signup-instructor",
   uploadUser.single("image"),
-  registerInstructor,
+  createInstructorValidation(),
+  signUpInstructor,
 );
 
 export default router;

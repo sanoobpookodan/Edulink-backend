@@ -2,9 +2,8 @@ import prisma from "../config/prisma.js";
 import bcrypt from "bcrypt";
 import ApiError from "../utils/ApiError.js";
 import generateToken from "../utils/generateToken.js";
-import { ADMIN, STUDENT } from "../constants/roles.js";
-import toUTCDate from "../utils/toUTC.js";
 import { createStudentWithUser } from "./student.service.js";
+import { createInstructorWithUser } from "./instructor.service.js";
 
 export const loginUser = async (email, password) => {
   const user = await prisma.user.findUnique({
@@ -19,4 +18,8 @@ export const loginUser = async (email, password) => {
 
 export const createStudent = async (data) => {
   return createStudentWithUser(data);
+};
+
+export const createInstructor = async (data) => {
+  return createInstructorWithUser(data);
 };
