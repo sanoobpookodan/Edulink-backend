@@ -46,7 +46,7 @@ export const createStudentWithUser = async (data) => {
   return result;
 };
 
-export async function updateStudent(id, data, currentUser) {
+export async function updateStudentService(id, data, currentUser) {
   return prisma.$transaction(async (tx) => {
     // 1️⃣ Update User (without role)
     const userUpdateData = {
@@ -92,3 +92,14 @@ export async function updateStudent(id, data, currentUser) {
     return updatedStudent;
   });
 }
+
+export const getAllStudentsService = async () => {
+  return await prisma.student.findMany({
+    include: {
+      user: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};

@@ -3629,10 +3629,10 @@ export namespace Prisma {
   export type StudentGroupByOutputType = {
     id: string
     userId: string
-    phone: string | null
+    phone: string
     image: string | null
-    gender: $Enums.Gender | null
-    dateOfBirth: Date | null
+    gender: $Enums.Gender
+    dateOfBirth: Date
     createdById: string | null
     updatedById: string | null
     isDeleted: boolean
@@ -3749,10 +3749,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
-      phone: string | null
+      phone: string
       image: string | null
-      gender: $Enums.Gender | null
-      dateOfBirth: Date | null
+      gender: $Enums.Gender
+      dateOfBirth: Date
       createdById: string | null
       updatedById: string | null
       isDeleted: boolean
@@ -4720,8 +4720,11 @@ export namespace Prisma {
   export type InstructorMinAggregateOutputType = {
     id: string | null
     userId: string | null
+    phone: string | null
     image: string | null
     bio: string | null
+    gender: $Enums.Gender | null
+    dateOfBirth: Date | null
     createdById: string | null
     updatedById: string | null
     isDeleted: boolean | null
@@ -4732,8 +4735,11 @@ export namespace Prisma {
   export type InstructorMaxAggregateOutputType = {
     id: string | null
     userId: string | null
+    phone: string | null
     image: string | null
     bio: string | null
+    gender: $Enums.Gender | null
+    dateOfBirth: Date | null
     createdById: string | null
     updatedById: string | null
     isDeleted: boolean | null
@@ -4744,8 +4750,11 @@ export namespace Prisma {
   export type InstructorCountAggregateOutputType = {
     id: number
     userId: number
+    phone: number
     image: number
     bio: number
+    gender: number
+    dateOfBirth: number
     createdById: number
     updatedById: number
     isDeleted: number
@@ -4758,8 +4767,11 @@ export namespace Prisma {
   export type InstructorMinAggregateInputType = {
     id?: true
     userId?: true
+    phone?: true
     image?: true
     bio?: true
+    gender?: true
+    dateOfBirth?: true
     createdById?: true
     updatedById?: true
     isDeleted?: true
@@ -4770,8 +4782,11 @@ export namespace Prisma {
   export type InstructorMaxAggregateInputType = {
     id?: true
     userId?: true
+    phone?: true
     image?: true
     bio?: true
+    gender?: true
+    dateOfBirth?: true
     createdById?: true
     updatedById?: true
     isDeleted?: true
@@ -4782,8 +4797,11 @@ export namespace Prisma {
   export type InstructorCountAggregateInputType = {
     id?: true
     userId?: true
+    phone?: true
     image?: true
     bio?: true
+    gender?: true
+    dateOfBirth?: true
     createdById?: true
     updatedById?: true
     isDeleted?: true
@@ -4867,8 +4885,11 @@ export namespace Prisma {
   export type InstructorGroupByOutputType = {
     id: string
     userId: string
+    phone: string
     image: string | null
     bio: string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date
     createdById: string | null
     updatedById: string | null
     isDeleted: boolean
@@ -4896,8 +4917,11 @@ export namespace Prisma {
   export type InstructorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    phone?: boolean
     image?: boolean
     bio?: boolean
+    gender?: boolean
+    dateOfBirth?: boolean
     createdById?: boolean
     updatedById?: boolean
     isDeleted?: boolean
@@ -4911,8 +4935,11 @@ export namespace Prisma {
   export type InstructorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    phone?: boolean
     image?: boolean
     bio?: boolean
+    gender?: boolean
+    dateOfBirth?: boolean
     createdById?: boolean
     updatedById?: boolean
     isDeleted?: boolean
@@ -4924,8 +4951,11 @@ export namespace Prisma {
   export type InstructorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
+    phone?: boolean
     image?: boolean
     bio?: boolean
+    gender?: boolean
+    dateOfBirth?: boolean
     createdById?: boolean
     updatedById?: boolean
     isDeleted?: boolean
@@ -4937,8 +4967,11 @@ export namespace Prisma {
   export type InstructorSelectScalar = {
     id?: boolean
     userId?: boolean
+    phone?: boolean
     image?: boolean
     bio?: boolean
+    gender?: boolean
+    dateOfBirth?: boolean
     createdById?: boolean
     updatedById?: boolean
     isDeleted?: boolean
@@ -4946,7 +4979,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type InstructorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "image" | "bio" | "createdById" | "updatedById" | "isDeleted" | "createdAt" | "updatedAt", ExtArgs["result"]["instructor"]>
+  export type InstructorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "phone" | "image" | "bio" | "gender" | "dateOfBirth" | "createdById" | "updatedById" | "isDeleted" | "createdAt" | "updatedAt", ExtArgs["result"]["instructor"]>
   export type InstructorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     courses?: boolean | Instructor$coursesArgs<ExtArgs>
@@ -4968,8 +5001,11 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
+      phone: string
       image: string | null
       bio: string | null
+      gender: $Enums.Gender
+      dateOfBirth: Date
       createdById: string | null
       updatedById: string | null
       isDeleted: boolean
@@ -5402,8 +5438,11 @@ export namespace Prisma {
   interface InstructorFieldRefs {
     readonly id: FieldRef<"Instructor", 'String'>
     readonly userId: FieldRef<"Instructor", 'String'>
+    readonly phone: FieldRef<"Instructor", 'String'>
     readonly image: FieldRef<"Instructor", 'String'>
     readonly bio: FieldRef<"Instructor", 'String'>
+    readonly gender: FieldRef<"Instructor", 'Gender'>
+    readonly dateOfBirth: FieldRef<"Instructor", 'DateTime'>
     readonly createdById: FieldRef<"Instructor", 'String'>
     readonly updatedById: FieldRef<"Instructor", 'String'>
     readonly isDeleted: FieldRef<"Instructor", 'Boolean'>
@@ -17286,8 +17325,11 @@ export namespace Prisma {
   export const InstructorScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
+    phone: 'phone',
     image: 'image',
     bio: 'bio',
+    gender: 'gender',
+    dateOfBirth: 'dateOfBirth',
     createdById: 'createdById',
     updatedById: 'updatedById',
     isDeleted: 'isDeleted',
@@ -17720,10 +17762,10 @@ export namespace Prisma {
     NOT?: StudentWhereInput | StudentWhereInput[]
     id?: StringFilter<"Student"> | string
     userId?: StringFilter<"Student"> | string
-    phone?: StringNullableFilter<"Student"> | string | null
+    phone?: StringFilter<"Student"> | string
     image?: StringNullableFilter<"Student"> | string | null
-    gender?: EnumGenderNullableFilter<"Student"> | $Enums.Gender | null
-    dateOfBirth?: DateTimeNullableFilter<"Student"> | Date | string | null
+    gender?: EnumGenderFilter<"Student"> | $Enums.Gender
+    dateOfBirth?: DateTimeFilter<"Student"> | Date | string
     createdById?: StringNullableFilter<"Student"> | string | null
     updatedById?: StringNullableFilter<"Student"> | string | null
     isDeleted?: BoolFilter<"Student"> | boolean
@@ -17739,10 +17781,10 @@ export namespace Prisma {
   export type StudentOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
-    phone?: SortOrderInput | SortOrder
+    phone?: SortOrder
     image?: SortOrderInput | SortOrder
-    gender?: SortOrderInput | SortOrder
-    dateOfBirth?: SortOrderInput | SortOrder
+    gender?: SortOrder
+    dateOfBirth?: SortOrder
     createdById?: SortOrderInput | SortOrder
     updatedById?: SortOrderInput | SortOrder
     isDeleted?: SortOrder
@@ -17761,10 +17803,10 @@ export namespace Prisma {
     AND?: StudentWhereInput | StudentWhereInput[]
     OR?: StudentWhereInput[]
     NOT?: StudentWhereInput | StudentWhereInput[]
-    phone?: StringNullableFilter<"Student"> | string | null
+    phone?: StringFilter<"Student"> | string
     image?: StringNullableFilter<"Student"> | string | null
-    gender?: EnumGenderNullableFilter<"Student"> | $Enums.Gender | null
-    dateOfBirth?: DateTimeNullableFilter<"Student"> | Date | string | null
+    gender?: EnumGenderFilter<"Student"> | $Enums.Gender
+    dateOfBirth?: DateTimeFilter<"Student"> | Date | string
     createdById?: StringNullableFilter<"Student"> | string | null
     updatedById?: StringNullableFilter<"Student"> | string | null
     isDeleted?: BoolFilter<"Student"> | boolean
@@ -17780,10 +17822,10 @@ export namespace Prisma {
   export type StudentOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
-    phone?: SortOrderInput | SortOrder
+    phone?: SortOrder
     image?: SortOrderInput | SortOrder
-    gender?: SortOrderInput | SortOrder
-    dateOfBirth?: SortOrderInput | SortOrder
+    gender?: SortOrder
+    dateOfBirth?: SortOrder
     createdById?: SortOrderInput | SortOrder
     updatedById?: SortOrderInput | SortOrder
     isDeleted?: SortOrder
@@ -17800,10 +17842,10 @@ export namespace Prisma {
     NOT?: StudentScalarWhereWithAggregatesInput | StudentScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Student"> | string
     userId?: StringWithAggregatesFilter<"Student"> | string
-    phone?: StringNullableWithAggregatesFilter<"Student"> | string | null
+    phone?: StringWithAggregatesFilter<"Student"> | string
     image?: StringNullableWithAggregatesFilter<"Student"> | string | null
-    gender?: EnumGenderNullableWithAggregatesFilter<"Student"> | $Enums.Gender | null
-    dateOfBirth?: DateTimeNullableWithAggregatesFilter<"Student"> | Date | string | null
+    gender?: EnumGenderWithAggregatesFilter<"Student"> | $Enums.Gender
+    dateOfBirth?: DateTimeWithAggregatesFilter<"Student"> | Date | string
     createdById?: StringNullableWithAggregatesFilter<"Student"> | string | null
     updatedById?: StringNullableWithAggregatesFilter<"Student"> | string | null
     isDeleted?: BoolWithAggregatesFilter<"Student"> | boolean
@@ -17817,8 +17859,11 @@ export namespace Prisma {
     NOT?: InstructorWhereInput | InstructorWhereInput[]
     id?: StringFilter<"Instructor"> | string
     userId?: StringFilter<"Instructor"> | string
+    phone?: StringFilter<"Instructor"> | string
     image?: StringNullableFilter<"Instructor"> | string | null
     bio?: StringNullableFilter<"Instructor"> | string | null
+    gender?: EnumGenderFilter<"Instructor"> | $Enums.Gender
+    dateOfBirth?: DateTimeFilter<"Instructor"> | Date | string
     createdById?: StringNullableFilter<"Instructor"> | string | null
     updatedById?: StringNullableFilter<"Instructor"> | string | null
     isDeleted?: BoolFilter<"Instructor"> | boolean
@@ -17831,8 +17876,11 @@ export namespace Prisma {
   export type InstructorOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
+    phone?: SortOrder
     image?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    gender?: SortOrder
+    dateOfBirth?: SortOrder
     createdById?: SortOrderInput | SortOrder
     updatedById?: SortOrderInput | SortOrder
     isDeleted?: SortOrder
@@ -17848,8 +17896,11 @@ export namespace Prisma {
     AND?: InstructorWhereInput | InstructorWhereInput[]
     OR?: InstructorWhereInput[]
     NOT?: InstructorWhereInput | InstructorWhereInput[]
+    phone?: StringFilter<"Instructor"> | string
     image?: StringNullableFilter<"Instructor"> | string | null
     bio?: StringNullableFilter<"Instructor"> | string | null
+    gender?: EnumGenderFilter<"Instructor"> | $Enums.Gender
+    dateOfBirth?: DateTimeFilter<"Instructor"> | Date | string
     createdById?: StringNullableFilter<"Instructor"> | string | null
     updatedById?: StringNullableFilter<"Instructor"> | string | null
     isDeleted?: BoolFilter<"Instructor"> | boolean
@@ -17862,8 +17913,11 @@ export namespace Prisma {
   export type InstructorOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
+    phone?: SortOrder
     image?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    gender?: SortOrder
+    dateOfBirth?: SortOrder
     createdById?: SortOrderInput | SortOrder
     updatedById?: SortOrderInput | SortOrder
     isDeleted?: SortOrder
@@ -17880,8 +17934,11 @@ export namespace Prisma {
     NOT?: InstructorScalarWhereWithAggregatesInput | InstructorScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Instructor"> | string
     userId?: StringWithAggregatesFilter<"Instructor"> | string
+    phone?: StringWithAggregatesFilter<"Instructor"> | string
     image?: StringNullableWithAggregatesFilter<"Instructor"> | string | null
     bio?: StringNullableWithAggregatesFilter<"Instructor"> | string | null
+    gender?: EnumGenderWithAggregatesFilter<"Instructor"> | $Enums.Gender
+    dateOfBirth?: DateTimeWithAggregatesFilter<"Instructor"> | Date | string
     createdById?: StringNullableWithAggregatesFilter<"Instructor"> | string | null
     updatedById?: StringNullableWithAggregatesFilter<"Instructor"> | string | null
     isDeleted?: BoolWithAggregatesFilter<"Instructor"> | boolean
@@ -18747,10 +18804,10 @@ export namespace Prisma {
 
   export type StudentCreateInput = {
     id?: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -18766,10 +18823,10 @@ export namespace Prisma {
   export type StudentUncheckedCreateInput = {
     id?: string
     userId: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -18783,10 +18840,10 @@ export namespace Prisma {
 
   export type StudentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -18802,10 +18859,10 @@ export namespace Prisma {
   export type StudentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -18820,10 +18877,10 @@ export namespace Prisma {
   export type StudentCreateManyInput = {
     id?: string
     userId: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -18833,10 +18890,10 @@ export namespace Prisma {
 
   export type StudentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -18847,10 +18904,10 @@ export namespace Prisma {
   export type StudentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -18860,8 +18917,11 @@ export namespace Prisma {
 
   export type InstructorCreateInput = {
     id?: string
+    phone: string
     image?: string | null
     bio?: string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -18874,8 +18934,11 @@ export namespace Prisma {
   export type InstructorUncheckedCreateInput = {
     id?: string
     userId: string
+    phone: string
     image?: string | null
     bio?: string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -18886,8 +18949,11 @@ export namespace Prisma {
 
   export type InstructorUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -18900,8 +18966,11 @@ export namespace Prisma {
   export type InstructorUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -18913,8 +18982,11 @@ export namespace Prisma {
   export type InstructorCreateManyInput = {
     id?: string
     userId: string
+    phone: string
     image?: string | null
     bio?: string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -18924,8 +18996,11 @@ export namespace Prisma {
 
   export type InstructorUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -18936,8 +19011,11 @@ export namespace Prisma {
   export type InstructorUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -19918,22 +19996,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type EnumGenderNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumGenderNullableFilter<$PrismaModel> | $Enums.Gender | null
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  export type EnumGenderFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumGenderFilter<$PrismaModel> | $Enums.Gender
   }
 
   export type UserScalarRelationFilter = {
@@ -20046,28 +20113,14 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type EnumGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumGenderNullableWithAggregatesFilter<$PrismaModel> | $Enums.Gender | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumGenderNullableFilter<$PrismaModel>
-    _max?: NestedEnumGenderNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  export type EnumGenderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumGenderWithAggregatesFilter<$PrismaModel> | $Enums.Gender
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGenderFilter<$PrismaModel>
+    _max?: NestedEnumGenderFilter<$PrismaModel>
   }
 
   export type CourseListRelationFilter = {
@@ -20083,8 +20136,11 @@ export namespace Prisma {
   export type InstructorCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    phone?: SortOrder
     image?: SortOrder
     bio?: SortOrder
+    gender?: SortOrder
+    dateOfBirth?: SortOrder
     createdById?: SortOrder
     updatedById?: SortOrder
     isDeleted?: SortOrder
@@ -20095,8 +20151,11 @@ export namespace Prisma {
   export type InstructorMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    phone?: SortOrder
     image?: SortOrder
     bio?: SortOrder
+    gender?: SortOrder
+    dateOfBirth?: SortOrder
     createdById?: SortOrder
     updatedById?: SortOrder
     isDeleted?: SortOrder
@@ -20107,8 +20166,11 @@ export namespace Prisma {
   export type InstructorMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    phone?: SortOrder
     image?: SortOrder
     bio?: SortOrder
+    gender?: SortOrder
+    dateOfBirth?: SortOrder
     createdById?: SortOrder
     updatedById?: SortOrder
     isDeleted?: SortOrder
@@ -20157,6 +20219,17 @@ export namespace Prisma {
     in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type CourseCategoryScalarRelationFilter = {
@@ -20244,6 +20317,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumStatusFilter<$PrismaModel>
     _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type CourseScalarRelationFilter = {
@@ -20841,12 +20928,8 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type NullableEnumGenderFieldUpdateOperationsInput = {
-    set?: $Enums.Gender | null
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
+  export type EnumGenderFieldUpdateOperationsInput = {
+    set?: $Enums.Gender
   }
 
   export type UserUpdateOneRequiredWithoutStudentNestedInput = {
@@ -21137,6 +21220,10 @@ export namespace Prisma {
 
   export type EnumStatusFieldUpdateOperationsInput = {
     set?: $Enums.Status
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type CourseCategoryUpdateOneRequiredWithoutCoursesNestedInput = {
@@ -21701,22 +21788,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedEnumGenderNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumGenderNullableFilter<$PrismaModel> | $Enums.Gender | null
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  export type NestedEnumGenderFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumGenderFilter<$PrismaModel> | $Enums.Gender
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -21747,14 +21823,42 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumGenderNullableWithAggregatesFilter<$PrismaModel> | $Enums.Gender | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumGenderNullableFilter<$PrismaModel>
-    _max?: NestedEnumGenderNullableFilter<$PrismaModel>
+  export type NestedEnumGenderWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Gender | EnumGenderFieldRefInput<$PrismaModel>
+    in?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Gender[] | ListEnumGenderFieldRefInput<$PrismaModel>
+    not?: NestedEnumGenderWithAggregatesFilter<$PrismaModel> | $Enums.Gender
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGenderFilter<$PrismaModel>
+    _max?: NestedEnumGenderFilter<$PrismaModel>
+  }
+
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -21769,23 +21873,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedEnumStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
-  }
-
-  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumStatusFilter<$PrismaModel>
-    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type NestedEnumPublishStatusFilter<$PrismaModel = never> = {
@@ -21901,10 +21988,10 @@ export namespace Prisma {
 
   export type StudentCreateWithoutUserInput = {
     id?: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -21918,10 +22005,10 @@ export namespace Prisma {
 
   export type StudentUncheckedCreateWithoutUserInput = {
     id?: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -21940,8 +22027,11 @@ export namespace Prisma {
 
   export type InstructorCreateWithoutUserInput = {
     id?: string
+    phone: string
     image?: string | null
     bio?: string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -21952,8 +22042,11 @@ export namespace Prisma {
 
   export type InstructorUncheckedCreateWithoutUserInput = {
     id?: string
+    phone: string
     image?: string | null
     bio?: string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -21980,10 +22073,10 @@ export namespace Prisma {
 
   export type StudentUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -21997,10 +22090,10 @@ export namespace Prisma {
 
   export type StudentUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -22025,8 +22118,11 @@ export namespace Prisma {
 
   export type InstructorUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -22037,8 +22133,11 @@ export namespace Prisma {
 
   export type InstructorUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -22603,8 +22702,11 @@ export namespace Prisma {
 
   export type InstructorCreateWithoutCoursesInput = {
     id?: string
+    phone: string
     image?: string | null
     bio?: string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -22616,8 +22718,11 @@ export namespace Prisma {
   export type InstructorUncheckedCreateWithoutCoursesInput = {
     id?: string
     userId: string
+    phone: string
     image?: string | null
     bio?: string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -22800,8 +22905,11 @@ export namespace Prisma {
 
   export type InstructorUpdateWithoutCoursesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -22813,8 +22921,11 @@ export namespace Prisma {
   export type InstructorUncheckedUpdateWithoutCoursesInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -23246,10 +23357,10 @@ export namespace Prisma {
 
   export type StudentCreateWithoutEnrollmentsInput = {
     id?: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -23264,10 +23375,10 @@ export namespace Prisma {
   export type StudentUncheckedCreateWithoutEnrollmentsInput = {
     id?: string
     userId: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -23379,10 +23490,10 @@ export namespace Prisma {
 
   export type StudentUpdateWithoutEnrollmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -23397,10 +23508,10 @@ export namespace Prisma {
   export type StudentUncheckedUpdateWithoutEnrollmentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -23484,10 +23595,10 @@ export namespace Prisma {
 
   export type StudentCreateWithoutPaymentsInput = {
     id?: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -23502,10 +23613,10 @@ export namespace Prisma {
   export type StudentUncheckedCreateWithoutPaymentsInput = {
     id?: string
     userId: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -23608,10 +23719,10 @@ export namespace Prisma {
 
   export type StudentUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -23626,10 +23737,10 @@ export namespace Prisma {
   export type StudentUncheckedUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -23728,10 +23839,10 @@ export namespace Prisma {
 
   export type StudentCreateWithoutReviewsInput = {
     id?: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -23746,10 +23857,10 @@ export namespace Prisma {
   export type StudentUncheckedCreateWithoutReviewsInput = {
     id?: string
     userId: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -23827,10 +23938,10 @@ export namespace Prisma {
 
   export type StudentUpdateWithoutReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -23845,10 +23956,10 @@ export namespace Prisma {
   export type StudentUncheckedUpdateWithoutReviewsInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -23916,10 +24027,10 @@ export namespace Prisma {
 
   export type StudentCreateWithoutTestimonialsInput = {
     id?: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -23934,10 +24045,10 @@ export namespace Prisma {
   export type StudentUncheckedCreateWithoutTestimonialsInput = {
     id?: string
     userId: string
-    phone?: string | null
+    phone: string
     image?: string | null
-    gender?: $Enums.Gender | null
-    dateOfBirth?: Date | string | null
+    gender: $Enums.Gender
+    dateOfBirth: Date | string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -23966,10 +24077,10 @@ export namespace Prisma {
 
   export type StudentUpdateWithoutTestimonialsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -23984,10 +24095,10 @@ export namespace Prisma {
   export type StudentUncheckedUpdateWithoutTestimonialsInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-    dateOfBirth?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean

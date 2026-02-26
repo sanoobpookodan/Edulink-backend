@@ -25,7 +25,9 @@ export const authenticate = async (req, res, next) => {
 export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return next(new ApiError(403, "Forbidden"));
+      return next(
+        new ApiError(403, `Forbidden for ${req.user.role.toLowerCase()} role`),
+      );
     }
     next();
   };

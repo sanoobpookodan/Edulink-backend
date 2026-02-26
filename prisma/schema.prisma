@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma/client"
 }
 
@@ -72,10 +72,8 @@ model User {
   student    Student?    @relation("UserStudent")
   instructor Instructor?
 
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  studentsCreated Student[] @relation("StudentCreatedBy")
-  studentsUpdated Student[] @relation("StudentUpdatedBy")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Student {
@@ -83,15 +81,13 @@ model Student {
   userId String @unique
   user   User   @relation("UserStudent", fields: [userId], references: [id], onDelete: Cascade)
 
-  phone       String?
+  phone       String
   image       String?
-  gender      Gender?
-  dateOfBirth DateTime?
+  gender      Gender
+  dateOfBirth DateTime
 
   createdById String?
-  createdBy   User?   @relation("StudentCreatedBy", fields: [createdById], references: [id], onDelete: Cascade)
   updatedById String?
-  updatedBy   User?   @relation("StudentUpdatedBy", fields: [updatedById], references: [id], onDelete: Cascade)
   isDeleted   Boolean @default(false)
 
   createdAt DateTime @default(now())
@@ -108,10 +104,11 @@ model Instructor {
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
 
-  image String?
-  bio   String?
-
-  courses Course[]
+  phone       String
+  image       String?
+  bio         String?
+  gender      Gender
+  dateOfBirth DateTime
 
   createdById String?
   updatedById String?
@@ -119,6 +116,8 @@ model Instructor {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  courses Course[]
 }
 
 //

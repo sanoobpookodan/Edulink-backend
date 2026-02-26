@@ -14,3 +14,16 @@ export const createStudentValidation = () => {
 
   return [...buildValidators(rules), generateFormError];
 };
+
+export const updateStudentValidation = () => {
+  const rules = [
+    { field: "firstName", type: "notEmpty" },
+    { field: "lastName", type: "notEmpty" },
+    { field: "email", type: "email" },
+    { field: "phone", type: "notEmpty" },
+    { field: "gender", type: "notEmpty" },
+    { field: "dateOfBirth", type: "date" },
+  ];
+
+  return [...buildValidators(rules), generateFormError];
+};

@@ -8,6 +8,10 @@ import { createInstructorWithUser } from "./instructor.service.js";
 export const loginUser = async (email, password) => {
   const user = await prisma.user.findUnique({
     where: { email },
+    include: {
+      student: true,
+      instructor: true,
+    },
   });
   if (!user) throw new ApiError(400, "User not found");
   const isMatch = await bcrypt.compare(password, user.password);

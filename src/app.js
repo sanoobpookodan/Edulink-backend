@@ -5,7 +5,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 
 import authRoutes from "./routes/auth.routes.js";
-import courseRoutes from "./routes/course.routes.js";
+import studentRoutes from "./routes/student.routes.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import ApiError from "./utils/ApiError.js";
 import { optionalAuth } from "./middlewares/auth.middleware.js";
@@ -24,7 +24,7 @@ app.use(optionalAuth);
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/courses", courseRoutes);
+app.use("/api/students", studentRoutes);
 
 // 404 handler
 app.use((req, res, next) => {

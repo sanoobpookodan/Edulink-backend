@@ -1,3 +1,4 @@
+import { userSerializer } from "../serializers/auth.serializer.js";
 import {
   loginUser,
   createStudent,
@@ -7,9 +8,10 @@ import {
 export const login = async (req, res, next) => {
   try {
     const data = await loginUser(req.body.email, req.body.password);
+    const formatted = userSerializer(data.user);
     res.json({
       success: true,
-      data: { user: data.user, token: data.token },
+      data: { user: formatted, token: data.token },
     });
   } catch (err) {
     next(err);
