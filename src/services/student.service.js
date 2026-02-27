@@ -56,11 +56,9 @@ export async function updateStudentService(id, data, currentUser, imagePath) {
       where: { id },
       include: { user: true },
     });
-
     if (!student) {
       throw new ApiError(404, "Student not found");
     }
-
     // Email uniqueness check
     if (data.email && data.email !== student.user.email) {
       const existing = await tx.user.findUnique({
@@ -71,24 +69,21 @@ export async function updateStudentService(id, data, currentUser, imagePath) {
         throw new ApiError(400, "Email already registered");
       }
     }
-
     // Prepare user update data
     const userUpdateData = {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
     };
-
     await tx.user.update({
       where: { id: student.userId },
       data: userUpdateData,
     });
-
     // Save old image before overwriting
     if (imagePath && student.image) {
       oldImage = student.image;
     }
-
+    // update student data
     const updatedStudent = await tx.student.update({
       where: { id },
       data: {

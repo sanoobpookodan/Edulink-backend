@@ -1,36 +1,43 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const createUploader = (folderName = "general") => {
+  const uploadDir = path.join(process.cwd(), "public", "uploads", folderName);
 
-const createUploader = (folderName) => {
-  const uploadPath = path.join(__dirname, "../../public/uploads", folderName);
-
-  if (!fs.existsSync(uploadPath)) {
-    fs.mkdirSync(uploadPath, { recursive: true });
+  // Ensure directory exists
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
   }
 
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, uploadPath);
+      cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-      const uniqueName =
-        Date.now() + "-" + file.originalname.replace(/\s+/g, "-");
+      const ext = path.extname(file.originalname);
+      const baseName = path
+        .basename(file.originalname, ext)
+        .replace(/[^a-zA-Z0-9]/g, "-")
+        .toLowerCase();
+
+      const uniqueName = `${Date.now()}-${baseName}${ext}`;
+
+      // Public URL path stored in DB
       req.fileUrl = `/uploads/${folderName}/${uniqueName}`;
+
       cb(null, uniqueName);
     },
   });
 
   return multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: {
+      fileSize: 5 * 1024 * 1024, // 5MB
+    },
     fileFilter: (req, file, cb) => {
       if (!file.mimetype.startsWith("image/")) {
-        return cb(new Error("Only image files allowed"));
+        return cb(new Error("Only image files are allowed"));
       }
       cb(null, true);
     },
