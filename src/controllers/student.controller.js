@@ -6,6 +6,7 @@ import {
   createStudentWithUser,
   getAllStudentsService,
   getStudentByIdService,
+  deleteStudentService,
 } from "../services/student.service.js";
 import ApiError from "../utils/ApiError.js";
 
@@ -75,15 +76,12 @@ export const updateStudent = async (req, res, next) => {
 
 export const deleteStudent = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const student = await prisma.student.findUnique({ where: { id } });
-
-    if (!student) {
-      throw new ApiError(404, "Student not found");
-    }
-
-    await prisma.student.delete({ where: { id } });
-    res.json({ success: true, message: "Student deleted successfully" });
+    const student = await deleteStudentService(req.params.id, req.user);
+    res.json({
+      success: true,
+      message: "Student deleted successfully",
+      data: studentSerializer(student),
+    });
   } catch (err) {
     next(err);
   }

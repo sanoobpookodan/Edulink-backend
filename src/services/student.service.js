@@ -112,24 +112,27 @@ export async function updateStudentService(id, data, currentUser, imagePath) {
 
 export const getAllStudentsService = async ({
   isActive,
+  isDeleted,
   sortBy,
   order,
   page,
   limit,
 }) => {
-  const { skip, take, orderBy, meta } = buildQueryOptions({
+  const { skip, take, orderBy, meta, where } = buildQueryOptions({
     query: { sortBy, order, page, limit },
     allowedSortFields: ["createdAt", "phone"],
     defaultSortField: "createdAt",
   });
-
-  const where = {};
 
   if (isActive !== undefined) {
     where.user = {
       isActive: isActive === "true",
     };
   }
+  if (isDeleted !== undefined) {
+    where.isDeleted = isDeleted === "true";
+  }
+  console.log(where);
 
   const [students, total] = await Promise.all([
     prisma.student.findMany({
@@ -159,10 +162,27 @@ export const getStudentByIdService = async (id) => {
     where: { id },
     include: { user: true },
   });
+  if (!student) {
+    throw new ApiError(404, "Student not found");
+  }
+  return student;
+};
+
+export const deleteStudentService = async (id, currentUser) => {
+  const student = await prisma.student.findUnique({
+    where: { id, isDeleted: false },
+  });
 
   if (!student) {
     throw new ApiError(404, "Student not found");
   }
 
-  return student;
+  return await prisma.student.update({
+    where: { id },
+    data: {
+      isDeleted: true,
+      updatedById: currentUser?.id,
+    },
+    include: { user: true },
+  });
 };

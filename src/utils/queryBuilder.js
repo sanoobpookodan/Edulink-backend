@@ -3,7 +3,9 @@ export const buildQueryOptions = ({
   allowedSortFields = [],
   defaultSortField = "createdAt",
   defaultOrder = "desc",
+  where = {},
 }) => {
+  where.isDeleted = false;
   const { page = 1, limit = 10, sortBy, order } = query;
 
   const safePage = Math.max(Number(page) || 1, 1);
@@ -16,6 +18,7 @@ export const buildQueryOptions = ({
   const safeOrder = order === "asc" ? "asc" : defaultOrder;
 
   return {
+    where,
     skip: (safePage - 1) * safeLimit,
     take: safeLimit,
     orderBy: {
