@@ -14,3 +14,16 @@ export const createInstructorValidation = () => {
 
   return [...buildValidators(rules), generateFormError];
 };
+
+export const updateInstructorValidation = () => {
+  const rules = [
+    { field: "firstName", type: "notEmpty" },
+    { field: "lastName", type: "notEmpty" },
+    { field: "email", type: "email" },
+    { field: "phone", type: "notEmpty" },
+    { field: "bio", type: "notEmpty" },
+    { field: "dateOfBirth", type: "date" },
+  ];
+
+  return [...buildValidators(rules), generateFormError];
+};

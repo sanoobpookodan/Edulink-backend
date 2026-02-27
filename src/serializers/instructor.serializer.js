@@ -10,6 +10,7 @@ export const instructorSerializer = (instructor) => {
     phone: instructor.phone,
     image: instructor.image,
     gender: instructor.gender,
+    bio: instructor.bio,
     dateOfBirth: instructor.dateOfBirth,
 
     createdAt: instructor.createdAt,

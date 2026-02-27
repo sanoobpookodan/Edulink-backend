@@ -4,8 +4,10 @@ import bcrypt from "bcrypt";
 import ApiError from "../utils/ApiError.js";
 import toUTCDate from "../utils/toUTC.js";
 import { ADMIN, INSTRUCTOR, STUDENT } from "../constants/roles.js";
+import { deleteLocalFile } from "../utils/file.utils.js";
+import { buildQueryOptions } from "../utils/queryBuilder.js";
 
-export const createInstructorWithUser = async (data) => {
+export const createInstructorWithUser = async (data, user, imagePath) => {
   const existing = await prisma.user.findUnique({
     where: { email: data.email },
   });
@@ -13,7 +15,8 @@ export const createInstructorWithUser = async (data) => {
   if (existing) throw new ApiError(400, "Email already exists");
 
   const hashedPassword = await bcrypt.hash(data.password, 10);
-  let { role, id: userId } = data.user || {};
+  let { role, id: userId } = user || {};
+
   const result = await prisma.$transaction(async (tx) => {
     const newUser = await tx.user.create({
       data: {
@@ -32,7 +35,7 @@ export const createInstructorWithUser = async (data) => {
       data: {
         userId: newUser.id,
         phone: data.phone,
-        image: data.image,
+        image: imagePath,
         bio: data.bio,
         gender: data.gender.toUpperCase(),
         dateOfBirth: toUTCDate(data.dateOfBirth),
@@ -47,8 +50,15 @@ export const createInstructorWithUser = async (data) => {
   return result;
 };
 
-export async function updateInstructor(id, data, currentUser) {
-  return prisma.$transaction(async (tx) => {
+export async function updateInstructorService(
+  id,
+  data,
+  currentUser,
+  imagePath,
+) {
+  let oldImage = null;
+
+  const result = await prisma.$transaction(async (tx) => {
     // 1️⃣ Update User (without role)
     const userUpdateData = {
       firstName: data.firstName,
@@ -56,18 +66,24 @@ export async function updateInstructor(id, data, currentUser) {
       email: data.email,
     };
 
-    // Only update password if provided
-    if (data.password) {
-      userUpdateData.password = await bcrypt.hash(data.password, 10);
-    }
-
     const instructor = await tx.instructor.findUnique({
       where: { id },
       include: { user: true },
     });
 
     if (!instructor) {
-      throw new Error("Instructor not found");
+      throw new ApiError(404, "Instructor not found");
+    }
+
+    // Email uniqueness check
+    if (data.email && data.email !== instructor.user.email) {
+      const existing = await tx.user.findUnique({
+        where: { email: data.email },
+      });
+
+      if (existing) {
+        throw new ApiError(400, "Email already registered");
+      }
     }
 
     await tx.user.update({
@@ -75,16 +91,23 @@ export async function updateInstructor(id, data, currentUser) {
       data: userUpdateData,
     });
 
+    // Save old image before overwriting
+    if (imagePath && instructor.image) {
+      oldImage = instructor.image;
+    }
+
     // 2️⃣ Update Instructor profile
+    console.log(currentUser, "== currentUser?.id");
+
     const updatedInstructor = await tx.instructor.update({
       where: { id },
       data: {
         phone: data.phone,
-        image: data.image,
+        image: imagePath || instructor.image,
         bio: data.bio,
         gender: data.gender?.toUpperCase(),
-        dateOfBirth: data.dateOfBirth,
-        updatedById: currentUser?.id,
+        dateOfBirth: toUTCDate(data.dateOfBirth),
+        updatedById: currentUser,
       },
       include: {
         user: true,
@@ -93,4 +116,124 @@ export async function updateInstructor(id, data, currentUser) {
 
     return updatedInstructor;
   });
+  if (oldImage) {
+    await deleteLocalFile(oldImage);
+  }
+  return result;
 }
+
+export const getAllInstructorsService = async (query) => {
+  const { skip, take, orderBy, meta, where } = buildQueryOptions({ query });
+
+  if (query.isActive !== undefined) {
+    where.user = {
+      isActive: query.isActive === "true",
+    };
+  }
+  if (query.isDeleted !== undefined) {
+    where.isDeleted = query.isDeleted === "true";
+  }
+  const [instructors, total] = await Promise.all([
+    prisma.instructor.findMany({
+      where,
+      include: { user: true },
+      orderBy,
+      skip,
+      take,
+    }),
+    prisma.instructor.count({ where }),
+  ]);
+
+  return {
+    data: instructors,
+    meta: {
+      ...meta,
+      total,
+      totalPages: Math.ceil(total / meta.limit),
+    },
+  };
+};
+
+export const getInstructorByIdService = async (id) => {
+  const instructor = await prisma.instructor.findUnique({
+    where: { id, isDeleted: false },
+    include: { user: true },
+  });
+
+  if (!instructor) {
+    throw new ApiError(404, "Instructor not found");
+  }
+
+  return instructor;
+};
+
+export const deleteInstructorService = async (id, currentUserId) => {
+  const instructor = await prisma.instructor.findUnique({
+    where: { id, isDeleted: false },
+    include: { user: true },
+  });
+
+  if (!instructor) {
+    throw new ApiError(404, "Instructor not found");
+  }
+  await prisma.user.update({
+    where: { id: instructor.userId },
+    data: {
+      isActive: false,
+    },
+  });
+  return await prisma.instructor.update({
+    where: { id },
+    data: {
+      isDeleted: true,
+      updatedById: currentUserId,
+    },
+    include: { user: true },
+  });
+};
+
+export const activateInstructorService = async (id, currentUserId) => {
+  const instructor = await prisma.instructor.findUnique({
+    where: { id, isDeleted: false },
+  });
+  if (!instructor) {
+    throw new ApiError(404, "Instructor not found");
+  }
+  await prisma.user.update({
+    where: { id: instructor.userId },
+    data: { isActive: true },
+  });
+
+  return prisma.instructor.update({
+    where: { id },
+    include: { user: true },
+    data: { updatedById: currentUserId },
+  });
+};
+
+export const resetInstructorPasswordService = async (
+  id,
+  newPassword,
+  currentUserId,
+) => {
+  if (!newPassword) {
+    throw new ApiError(400, "Password is required");
+  }
+  const instructor = await prisma.instructor.findUnique({
+    where: { id, isDeleted: false },
+  });
+  if (!instructor) {
+    throw new ApiError(404, "Instructor not found");
+  }
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  await prisma.user.update({
+    where: { id: instructor.userId },
+    data: { password: hashedPassword },
+  });
+
+  return await prisma.instructor.update({
+    where: { id },
+    include: { user: true },
+    data: { updatedById: currentUserId },
+  });
+};
