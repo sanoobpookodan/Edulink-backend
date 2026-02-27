@@ -15,8 +15,7 @@ export const userSerializer = (user) => {
       image: user.student.image,
       gender: user.student.gender,
       dateOfBirth: user.student.dateOfBirth,
-      createdAt: user.student.createdAt,
-      updatedAt: user.student.updatedAt,
+      id: user.student.id,
     };
   }
 
@@ -28,8 +27,7 @@ export const userSerializer = (user) => {
       gender: user.instructor.gender,
       dateOfBirth: user.instructor.dateOfBirth,
       bio: user.instructor.bio,
-      createdAt: user.instructor.createdAt,
-      updatedAt: user.instructor.updatedAt,
+      id: user.instructor.id,
     };
   }
 

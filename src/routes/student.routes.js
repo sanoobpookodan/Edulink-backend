@@ -10,6 +10,9 @@ import {
   createStudent,
   updateStudent,
   deleteStudent,
+  activateStudent,
+  resetStudentPassword,
+  enrollStudent,
 } from "../controllers/student.controller.js";
 import { authenticate, authorize } from "../middlewares/auth.middleware.js";
 import { ADMIN, STUDENT } from "../constants/roles.js";
@@ -39,5 +42,19 @@ router.patch(
 );
 
 router.delete("/:id", authenticate, authorize(ADMIN), deleteStudent);
+
+// Activate student
+router.post("/:id/activate", authenticate, authorize(ADMIN), activateStudent);
+
+//Reset student password
+router.post(
+  "/:id/reset-password",
+  authenticate,
+  authorize(ADMIN),
+  resetStudentPassword,
+);
+
+// Enroll student in a course
+router.post("/:id/enroll", authenticate, authorize(ADMIN), enrollStudent);
 
 export default router;

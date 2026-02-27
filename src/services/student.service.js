@@ -103,7 +103,7 @@ export async function updateStudentService(id, data, currentUser, imagePath) {
     return updatedStudent;
   });
 
-  // 🔥 Delete old image AFTER transaction success
+  // Delete old image AFTER transaction success
   if (oldImage) {
     await deleteLocalFile(oldImage);
   }
@@ -132,8 +132,6 @@ export const getAllStudentsService = async ({
   if (isDeleted !== undefined) {
     where.isDeleted = isDeleted === "true";
   }
-  console.log(where);
-
   const [students, total] = await Promise.all([
     prisma.student.findMany({
       where,
@@ -176,7 +174,12 @@ export const deleteStudentService = async (id, currentUser) => {
   if (!student) {
     throw new ApiError(404, "Student not found");
   }
-
+  await prisma.user.update({
+    where: { id: student.userId },
+    data: {
+      isActive: false,
+    },
+  });
   return await prisma.student.update({
     where: { id },
     data: {
@@ -185,4 +188,98 @@ export const deleteStudentService = async (id, currentUser) => {
     },
     include: { user: true },
   });
+};
+
+export const activateStudentService = async (id, currentUser) => {
+  const student = await prisma.student.findUnique({
+    where: { id, isDeleted: false },
+  });
+  if (!student) {
+    throw new ApiError(404, "Student not found");
+  }
+  await prisma.user.update({
+    where: { id: student.userId },
+    data: { isActive: true },
+  });
+
+  return prisma.student.update({
+    where: { id },
+    include: { user: true },
+    data: { updatedById: currentUser?.id },
+  });
+};
+
+export const resetStudentPasswordService = async (
+  id,
+  newPassword,
+  currentUser,
+) => {
+  if (!newPassword) {
+    throw new ApiError(400, "Password is required");
+  }
+  const student = await prisma.student.findUnique({
+    where: { id, isDeleted: false },
+  });
+  if (!student) {
+    throw new ApiError(404, "Student not found");
+  }
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  await prisma.user.update({
+    where: { id: student.userId },
+    data: { password: hashedPassword },
+  });
+
+  return await prisma.student.update({
+    where: { id },
+    include: { user: true },
+    data: { updatedById: currentUser?.id },
+  });
+};
+
+export const enrollStudentService = async (id, courseId, currentUser) => {
+  if (!courseId) {
+    throw new ApiError(400, "Course ID is required");
+  }
+  const student = await prisma.student.findUnique({
+    where: { id, isDeleted: false },
+  });
+
+  if (!student) {
+    throw new ApiError(404, "Student not found");
+  }
+
+  const course = await prisma.course.findUnique({
+    where: { id: courseId },
+  });
+
+  if (!course) {
+    throw new ApiError(404, "Course not found");
+  }
+
+  const existingEnrollment = await prisma.enrollment.findUnique({
+    where: {
+      studentId_courseId: {
+        studentId: id,
+        courseId: courseId,
+      },
+    },
+  });
+
+  if (existingEnrollment) {
+    throw new ApiError(400, "Student already enrolled in this course");
+  }
+
+  const enrollment = await prisma.enrollment.create({
+    data: {
+      studentId: id,
+      courseId: courseId,
+      enrolledById: currentUser?.id,
+    },
+    include: {
+      student: { include: { user: true } },
+      course: true,
+    },
+  });
+
+  return enrollment;
 };
