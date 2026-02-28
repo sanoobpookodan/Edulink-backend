@@ -182,7 +182,7 @@ export const deleteInstructorService = async (id, currentUserId) => {
       isActive: false,
     },
   });
-  return await prisma.instructor.update({
+  await prisma.instructor.update({
     where: { id },
     data: {
       isDeleted: true,
@@ -204,7 +204,7 @@ export const activateInstructorService = async (id, currentUserId) => {
     data: { isActive: true },
   });
 
-  return prisma.instructor.update({
+  prisma.instructor.update({
     where: { id },
     include: { user: true },
     data: { updatedById: currentUserId },
@@ -231,7 +231,7 @@ export const resetInstructorPasswordService = async (
     data: { password: hashedPassword },
   });
 
-  return await prisma.instructor.update({
+  await prisma.instructor.update({
     where: { id },
     include: { user: true },
     data: { updatedById: currentUserId },

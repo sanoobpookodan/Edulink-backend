@@ -127,10 +127,10 @@ model Instructor {
 //
 
 model CourseCategory {
-  id    String  @id @default(uuid())
+  id    String @id @default(uuid())
   name  String
-  slug  String  @unique
-  image String?
+  slug  String @unique
+  image String
 
   courses Course[]
 
@@ -143,15 +143,14 @@ model CourseCategory {
 }
 
 model Course {
-  id          String    @id @default(uuid())
+  id          String @id @default(uuid())
   title       String
-  slug        String    @unique
+  slug        String @unique
   description String
   content     String
-  duration    String?
-  image       String?
-  status      Status    @default(ACTIVE)
-  dateUpdated DateTime?
+  duration    String //dynamic calculated from curriculum
+  image       String
+  status      Status @default(ACTIVE)
 
   categoryId String
   category   CourseCategory @relation(fields: [categoryId], references: [id])
@@ -159,31 +158,37 @@ model Course {
   instructorId String
   instructor   Instructor @relation(fields: [instructorId], references: [id])
 
-  curriculum  Curriculum[]
-  enrollments Enrollment[]
-  reviews     Review[]
-
   createdById String?
   updatedById String?
   isDeleted   Boolean @default(false)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  payments  Payment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  curriculum  Curriculum[]
+  overview    Overview[]
+  enrollments Enrollment[]
+  reviews     Review[]
+  payments    Payment[]
+}
+
+model Overview {
+  id        String  @id @default(uuid())
+  courseId  String
+  course    Course  @relation(fields: [courseId], references: [id])
+  title     String
+  isDeleted Boolean @default(false)
 }
 
 model Curriculum {
-  id    String @id @default(uuid())
-  title String
-
+  id       String @id @default(uuid())
+  title    String
   courseId String
   course   Course @relation(fields: [courseId], references: [id])
 
   lessons Lesson[]
 
-  createdById String?
-  updatedById String?
-  isDeleted   Boolean @default(false)
+  isDeleted Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -225,7 +230,6 @@ model Blog {
   description String
   content     String
   image       String?
-  tags        String[]
   status      PublishStatus @default(DRAFT)
 
   categoryId String
@@ -237,6 +241,17 @@ model Blog {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  blogTags BlogTag[]
+}
+
+model BlogTag {
+  id   String @id @default(uuid())
+  name String @unique
+  slug String @unique
+
+  blogId String
+  blog   Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade)
 }
 
 //
@@ -254,13 +269,13 @@ model Enrollment {
   courseId String
   course   Course @relation(fields: [courseId], references: [id])
 
-  status      EnrollmentStatus @default(ACTIVE)
-  progress    Int              @default(0)
+  status   EnrollmentStatus @default(ACTIVE)
+  progress Int              @default(0)
+
+  enrolledAt  DateTime  @default(now())
   completedAt DateTime?
 
   payments Payment[]
-
-  enrolledAt DateTime @default(now())
 }
 
 model Payment {
@@ -295,6 +310,42 @@ model Review {
   course   Course @relation(fields: [courseId], references: [id])
 
   createdAt DateTime @default(now())
+}
+
+//
+// =========================
+// GENERAL CONTENT MODELS
+// =========================
+//
+
+model Spotlight {
+  id          String  @id @default(uuid())
+  title       String
+  description String
+  status      Status  @default(ACTIVE)
+  image       String?
+
+  createdById String?
+  updatedById String?
+  isDeleted   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model About {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  image       String
+  status      Status @default(ACTIVE)
+
+  createdById String?
+  updatedById String?
+  isDeleted   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Testimonial {

@@ -18,7 +18,7 @@ const createUploader = (folderName = "general") => {
       const ext = path.extname(file.originalname);
       const baseName = path
         .basename(file.originalname, ext)
-        .replace(/[^a-zA-Z0-9]/g, "-")
+        .replace(/[^a-zA-Z0-9]/g, "")
         .toLowerCase();
 
       const uniqueName = `${Date.now()}-${baseName}${ext}`;

@@ -65,14 +65,10 @@ export const updateInstructor = async (req, res, next) => {
 
 export const deleteInstructor = async (req, res, next) => {
   try {
-    const instructor = await deleteInstructorService(
-      req.params.id,
-      req.user.id,
-    );
+    await deleteInstructorService(req.params.id, req.user.id);
     res.json({
       success: true,
       message: "Instructor deleted",
-      data: instructorSerializer(instructor),
     });
   } catch (err) {
     next(err);
@@ -81,14 +77,10 @@ export const deleteInstructor = async (req, res, next) => {
 
 export const activateInstructor = async (req, res, next) => {
   try {
-    const instructor = await activateInstructorService(
-      req.params.id,
-      req.user.id,
-    );
+    await activateInstructorService(req.params.id, req.user.id);
     res.json({
       success: true,
       message: "Instructor activated successfully",
-      data: instructorSerializer(instructor),
     });
   } catch (err) {
     next(err);
@@ -97,7 +89,7 @@ export const activateInstructor = async (req, res, next) => {
 
 export const resetInstructorPassword = async (req, res, next) => {
   try {
-    const instructor = await resetInstructorPasswordService(
+    await resetInstructorPasswordService(
       req.params.id,
       req.body?.password,
       req.user.id,
@@ -106,7 +98,6 @@ export const resetInstructorPassword = async (req, res, next) => {
     res.json({
       success: true,
       message: "Password reset successfully",
-      data: instructorSerializer(instructor),
     });
   } catch (err) {
     next(err);

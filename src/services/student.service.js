@@ -152,7 +152,7 @@ export const getAllStudentsService = async ({
 
 export const getStudentByIdService = async (id) => {
   const student = await prisma.student.findUnique({
-    where: { id },
+    where: { id, isDeleted: false },
     include: { user: true },
   });
   if (!student) {
@@ -175,7 +175,7 @@ export const deleteStudentService = async (id, currentUser) => {
       isActive: false,
     },
   });
-  return await prisma.student.update({
+  await prisma.student.update({
     where: { id },
     data: {
       isDeleted: true,
@@ -197,7 +197,7 @@ export const activateStudentService = async (id, currentUser) => {
     data: { isActive: true },
   });
 
-  return prisma.student.update({
+  prisma.student.update({
     where: { id },
     include: { user: true },
     data: { updatedById: currentUser?.id },
@@ -224,7 +224,7 @@ export const resetStudentPasswordService = async (
     data: { password: hashedPassword },
   });
 
-  return await prisma.student.update({
+  await prisma.student.update({
     where: { id },
     include: { user: true },
     data: { updatedById: currentUser?.id },
