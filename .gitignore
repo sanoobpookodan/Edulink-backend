@@ -38,3 +38,9 @@ coverage/
 
 # Mac
 .DS_Store
+generated/prisma/client/edge.js
+generated/prisma/client/index-browser.js
+generated/prisma/client/index.d.ts
+generated/prisma/client/index.js
+generated/prisma/client/package.json
+generated/prisma/client/schema.prisma

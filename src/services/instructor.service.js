@@ -53,7 +53,7 @@ export const createInstructorWithUser = async (data, user, imagePath) => {
 export async function updateInstructorService(
   id,
   data,
-  currentUser,
+  currentUserId,
   imagePath,
 ) {
   let oldImage = null;
@@ -97,8 +97,6 @@ export async function updateInstructorService(
     }
 
     // 2️⃣ Update Instructor profile
-    console.log(currentUser, "== currentUser?.id");
-
     const updatedInstructor = await tx.instructor.update({
       where: { id },
       data: {
@@ -107,7 +105,7 @@ export async function updateInstructorService(
         bio: data.bio,
         gender: data.gender?.toUpperCase(),
         dateOfBirth: toUTCDate(data.dateOfBirth),
-        updatedById: currentUser,
+        updatedById: currentUserId,
       },
       include: {
         user: true,

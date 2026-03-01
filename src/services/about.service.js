@@ -33,7 +33,7 @@ export const getAllAboutService = async (query) => {
   };
 };
 
-export const createAboutService = async (data, imagePath) => {
+export const createAboutService = async (data, imagePath, userId) => {
   return await prisma.$transaction(async (tx) => {
     const status = data.status.toUpperCase();
 
@@ -54,6 +54,8 @@ export const createAboutService = async (data, imagePath) => {
         description: data.description,
         image: imagePath,
         status,
+        createdById: userId,
+        updatedById: userId,
       },
     });
 
@@ -89,7 +91,7 @@ export const getActiveAboutService = async () => {
   return about;
 };
 
-export const updateAboutService = async (id, data, imagePath) => {
+export const updateAboutService = async (id, data, imagePath, userId) => {
   return await prisma.$transaction(async (tx) => {
     const about = await tx.about.findUnique({
       where: { id },
@@ -120,6 +122,7 @@ export const updateAboutService = async (id, data, imagePath) => {
         description: data.description ?? about.description,
         image: imagePath ?? data.image ?? about.image,
         status: status ?? about.status,
+        updatedById: userId,
       },
     });
 

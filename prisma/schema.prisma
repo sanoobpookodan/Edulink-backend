@@ -319,11 +319,11 @@ model Review {
 //
 
 model Spotlight {
-  id          String  @id @default(uuid())
+  id          String @id @default(uuid())
   title       String
   description String
-  status      Status  @default(ACTIVE)
-  image       String?
+  status      Status @default(ACTIVE)
+  image       String
 
   createdById String?
   updatedById String?

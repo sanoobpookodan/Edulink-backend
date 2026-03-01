@@ -25,7 +25,7 @@ export const getAllAbout = async (req, res, next) => {
 
 export const createAbout = async (req, res, next) => {
   try {
-    const data = await createAboutService(req.body, req.fileUrl);
+    const data = await createAboutService(req.body, req.fileUrl, req.user.id);
     const serialized = aboutSerializer(data);
     res.status(201).json({
       success: true,
@@ -59,7 +59,12 @@ export const getActiveAbout = async (req, res, next) => {
 
 export const updateAbout = async (req, res, next) => {
   try {
-    const data = await updateAboutService(req.params.id, req.body, req.fileUrl);
+    const data = await updateAboutService(
+      req.params.id,
+      req.body,
+      req.fileUrl,
+      req.user.id,
+    );
     const serialized = aboutSerializer(data);
     res.json({
       success: true,
