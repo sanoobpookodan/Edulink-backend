@@ -35,7 +35,7 @@ router.post(
   "/",
   authenticate,
   authorize(ADMIN),
-  uploadCourse.single("image"),
+  // uploadCourse.single("image"),
   createCourseValidation(),
   createCourse,
 );

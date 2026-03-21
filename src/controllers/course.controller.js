@@ -88,9 +88,9 @@ export const deleteCourse = async (req, res, next) => {
 export const getCourseCurriculum = async (req, res, next) => {
   try {
     const { courseId } = req.params;
-    const curriculum = await getCourseCurriculumService(courseId);
-    const serialized = curriculum.map(curriculumSerializer);
-    res.json({ success: true, data: serialized });
+    const result = await getCourseCurriculumService(courseId, req.query);
+    result.data = result.data.map(curriculumSerializer);
+    res.json({ success: true, ...result });
   } catch (err) {
     next(err);
   }

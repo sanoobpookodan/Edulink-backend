@@ -6,6 +6,40 @@ function buildValidators(rules = []) {
     let message;
 
     switch (rule.type) {
+      case "isArray":
+        validator = validator
+          .notEmpty()
+          .withMessage(
+            rule.message ||
+              `${rule.field.charAt(0).toUpperCase() + rule.field.slice(1)} is required`,
+          )
+          .isArray()
+          .withMessage(
+            rule.message ||
+              `${rule.field.charAt(0).toUpperCase() + rule.field.slice(1)} must be an array`,
+          )
+          .custom((value) => {
+            const errors = [];
+            value.forEach((item, index) => {
+              rule.requiredFields?.forEach((field) => {
+                if (
+                  item[field] === undefined ||
+                  item[field] === null ||
+                  item[field] === ""
+                ) {
+                  errors.push(
+                    `${field} is required at ${rule.field}[${index}]`,
+                  );
+                }
+              });
+            });
+            if (errors.length > 0) {
+              throw new Error(errors.join(", "));
+            }
+            return true;
+          });
+
+        break;
       case "status":
         validator = validator
           .optional()

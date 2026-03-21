@@ -206,7 +206,7 @@ export const deleteCourseService = async (id, userId) => {
 };
 
 // Curriculum
-export const getCourseCurriculumService = async (courseId) => {
+export const getCourseCurriculumService = async (courseId, query = {}) => {
   const course = await prisma.course.findUnique({
     where: { id: courseId },
   });
@@ -215,11 +215,33 @@ export const getCourseCurriculumService = async (courseId) => {
     throw new ApiError(404, "Course not found");
   }
 
-  return await prisma.curriculum.findMany({
-    where: { courseId, isDeleted: false },
-    include: { lessons: true },
-    orderBy: { createdAt: "asc" },
+  const { skip, take, orderBy, meta, where } = buildQueryOptions({
+    query,
+    allowedSortFields: ["createdAt", "title"],
   });
+
+  where.courseId = courseId;
+  where.isDeleted = false;
+
+  const [curriculum, total] = await Promise.all([
+    prisma.curriculum.findMany({
+      where,
+      include: { lessons: true },
+      orderBy,
+      skip,
+      take,
+    }),
+    prisma.curriculum.count({ where }),
+  ]);
+
+  return {
+    data: curriculum,
+    meta: {
+      ...meta,
+      total,
+      totalPages: Math.ceil(total / meta.limit),
+    },
+  };
 };
 
 export const createCurriculumService = async (courseId, data) => {

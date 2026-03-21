@@ -1,15 +1,36 @@
-import { param } from "express-validator";
+import { param, body } from "express-validator";
 import generateFormError from "../middlewares/validate.middleware.js";
 import buildValidators from "../utils/buildValidators.js";
 
 export const createCurriculumValidation = () => {
-  const rules = [{ field: "title", type: "notEmpty" }];
+  const rules = [
+    { field: "title", type: "notEmpty" },
+    // { field: "lessons", type: "notEmpty", message: "Lessons are required" },
+    {
+      field: "lessons",
+      type: "isArray",
+      requiredFields: ["title", "duration"],
+    },
+  ];
 
   return [...buildValidators(rules), generateFormError];
 };
 
 export const updateCurriculumValidation = () => {
-  const rules = [{ field: "title", type: "notEmpty" }];
+  const rules = [
+    { field: "title", type: "notEmpty" },
+    { field: "lessons", type: "isArray" },
+    {
+      field: "lessons.*.title",
+      type: "notEmpty",
+      message: "Lesson title is required",
+    },
+    {
+      field: "lessons.*.duration",
+      type: "notEmpty",
+      message: "Lesson duration is required",
+    },
+  ];
 
   return [...buildValidators(rules), generateFormError];
 };
