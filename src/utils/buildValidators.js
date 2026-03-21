@@ -6,6 +6,13 @@ function buildValidators(rules = []) {
     let message;
 
     switch (rule.type) {
+      case "status":
+        validator = validator
+          .optional()
+          .customSanitizer((value) => value?.toUpperCase())
+          .isIn(["ACTIVE", "INACTIVE"])
+          .withMessage("Status must be ACTIVE or INACTIVE");
+        break;
       case "gender":
         validator = validator
           .notEmpty()

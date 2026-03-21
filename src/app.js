@@ -5,9 +5,19 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 
 import authRoutes from "./routes/auth.routes.js";
-import studentRoutes from "./routes/student.routes.js";
+import studentRoutes from "./routes/students.routes.js";
+import instructorRoutes from "./routes/instructors.routes.js";
+import courseRoutes from "./routes/courses.routes.js";
+import courseCategoryRoutes from "./routes/course-categories.routes.js";
+import blogCategoryRoutes from "./routes/blog-categories.routes.js";
+import blogRoutes from "./routes/blogs.routes.js";
+import testimonialRoutes from "./routes/testimonials.routes.js";
+import reviewRoutes from "./routes/reviews.routes.js";
+import spotlightRoutes from "./routes/spotlights.routes.js";
+import aboutRoutes from "./routes/about.routes.js";
+import jiraRoutes from "./module/jira/route/jira.routes.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
-import ApiError from "./utils/ApiError.js";
+import notFoundMiddleware from "./middlewares/not-found.middleware.js";
 import { optionalAuth } from "./middlewares/auth.middleware.js";
 
 const app = express();
@@ -19,18 +29,29 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use("/uploads", express.static("public/uploads"));
+app.use(
+  "/uploads",
+  express.static("public/uploads", {
+    fallthrough: false,
+  }),
+);
 app.use(optionalAuth);
-
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/students", studentRoutes);
+app.use("/api/instructors", instructorRoutes);
+app.use("/api/spotlights", spotlightRoutes);
+app.use("/api/about", aboutRoutes);
+app.use("/api/course-categories", courseCategoryRoutes);
+app.use("/api/courses", courseRoutes);
+// app.use("/api/blog-categories", blogCategoryRoutes);
+// app.use("/api/blogs", blogRoutes);
+// app.use("/api/testimonials", testimonialRoutes);
+// app.use("/api/reviews", reviewRoutes);
+app.use("/api/jira", jiraRoutes);
 
 // 404 handler
-app.use((req, res, next) => {
-  next(new ApiError(404, "Route not found 404"));
-});
-
+app.use(notFoundMiddleware);
 // Error middleware (must be last)
 app.use(errorMiddleware);
 
