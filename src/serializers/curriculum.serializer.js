@@ -16,6 +16,12 @@ export const curriculumSerializer = (curriculum) => {
     lessons: Array.isArray(curriculum.lessons)
       ? curriculum.lessons.map(lessonSerializer)
       : [],
+    overview: Array.isArray(curriculum.overview)
+      ? curriculum.overview.map((item) => ({
+          id: item.id,
+          title: item.title,
+        }))
+      : [],
     createdAt: curriculum.createdAt,
     updatedAt: curriculum.updatedAt,
   };

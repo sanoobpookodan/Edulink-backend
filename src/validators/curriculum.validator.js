@@ -5,12 +5,12 @@ import buildValidators from "../utils/buildValidators.js";
 export const createCurriculumValidation = () => {
   const rules = [
     { field: "title", type: "notEmpty" },
-    // { field: "lessons", type: "notEmpty", message: "Lessons are required" },
     {
       field: "lessons",
       type: "isArray",
       requiredFields: ["title", "duration"],
     },
+    { field: "overview", type: "isArray" },
   ];
 
   return [...buildValidators(rules), generateFormError];
@@ -19,17 +19,12 @@ export const createCurriculumValidation = () => {
 export const updateCurriculumValidation = () => {
   const rules = [
     { field: "title", type: "notEmpty" },
-    { field: "lessons", type: "isArray" },
     {
-      field: "lessons.*.title",
-      type: "notEmpty",
-      message: "Lesson title is required",
+      field: "lessons",
+      type: "isArray",
+      requiredFields: ["title", "duration"],
     },
-    {
-      field: "lessons.*.duration",
-      type: "notEmpty",
-      message: "Lesson duration is required",
-    },
+    { field: "overview", type: "isArray" },
   ];
 
   return [...buildValidators(rules), generateFormError];

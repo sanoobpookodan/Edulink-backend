@@ -8,6 +8,17 @@ function buildValidators(rules = []) {
     switch (rule.type) {
       case "isArray":
         validator = validator
+          .customSanitizer((value) => {
+            if (Array.isArray(value)) {
+              return value.filter(
+                (item) =>
+                  item !== undefined &&
+                  item !== null &&
+                  String(item).trim() !== "",
+              );
+            }
+            return value;
+          })
           .notEmpty()
           .withMessage(
             rule.message ||

@@ -76,7 +76,11 @@ export const getAllCoursesService = async (query = {}) => {
   const [courses, total] = await Promise.all([
     prisma.course.findMany({
       where,
-      include: { instructor: true, category: true },
+      include: {
+        instructor: true,
+        category: true,
+        overview: { where: { isDeleted: false } },
+      },
       orderBy,
       skip,
       take,
@@ -253,22 +257,39 @@ export const createCurriculumService = async (courseId, data) => {
     throw new ApiError(404, "Course not found");
   }
 
-  return await prisma.curriculum.create({
-    data: {
-      title: data.title,
-      courseId: courseId,
-      ...(Array.isArray(data.lessons) && data.lessons.length > 0
-        ? {
-            lessons: {
-              create: data.lessons.map((lesson) => ({
-                title: lesson.title,
-                duration: lesson.duration,
-              })),
-            },
-          }
-        : {}),
-    },
-    include: { lessons: true },
+  return await prisma.$transaction(async (tx) => {
+    const curriculum = await tx.curriculum.create({
+      data: {
+        title: data.title,
+        courseId: courseId,
+        ...(Array.isArray(data.lessons) && data.lessons.length > 0
+          ? {
+              lessons: {
+                create: data.lessons.map((lesson) => ({
+                  title: lesson.title,
+                  duration: lesson.duration,
+                })),
+              },
+            }
+          : {}),
+      },
+      include: { lessons: true },
+    });
+
+    if (Array.isArray(data.overview) && data.overview.length > 0) {
+      await tx.overview.createMany({
+        data: data.overview.map((item) => ({
+          courseId: courseId,
+          title: item,
+        })),
+      });
+    }
+
+    curriculum.overview = await tx.overview.findMany({
+      where: { courseId, isDeleted: false },
+    });
+
+    return curriculum;
   });
 };
 
