@@ -10,7 +10,6 @@ export const createCurriculumValidation = () => {
       type: "isArray",
       requiredFields: ["title", "duration"],
     },
-    { field: "overview", type: "isArray" },
   ];
 
   return [...buildValidators(rules), generateFormError];
@@ -24,7 +23,6 @@ export const updateCurriculumValidation = () => {
       type: "isArray",
       requiredFields: ["title", "duration"],
     },
-    { field: "overview", type: "isArray" },
   ];
 
   return [...buildValidators(rules), generateFormError];

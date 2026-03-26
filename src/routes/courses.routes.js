@@ -8,22 +8,13 @@ import {
   getCourseById,
   updateCourse,
   deleteCourse,
-  getCourseCurriculum,
-  createCurriculum,
-  updateCurriculum,
-  deleteCurriculum,
+  deleteAllCurriculumAndOverview,
 } from "../controllers/course.controller.js";
 import {
   createCourseValidation,
   updateCourseValidation,
   courseIdValidation,
 } from "../validators/course.validator.js";
-import {
-  createCurriculumValidation,
-  updateCurriculumValidation,
-  courseIdParamValidation,
-  curriculumIdValidation,
-} from "../validators/curriculum.validator.js";
 
 const router = express.Router();
 const uploadCourse = createUploader("courses");
@@ -59,37 +50,12 @@ router.delete(
   deleteCourse,
 );
 
-// Curriculum
-router.get(
-  "/:courseId/curriculum",
-  courseIdParamValidation(),
-  getCourseCurriculum,
-);
-
-router.post(
-  "/:courseId/curriculum",
-  authenticate,
-  authorize(ADMIN),
-  courseIdParamValidation(),
-  createCurriculumValidation(),
-  createCurriculum,
-);
-
-router.patch(
-  "/curriculum/:id",
-  authenticate,
-  authorize(ADMIN),
-  curriculumIdValidation(),
-  updateCurriculumValidation(),
-  updateCurriculum,
-);
-
+// Dev route - Delete all curriculum and overview
 router.delete(
-  "/curriculum/:id",
+  "/delete/AllCurriculmAndOverview",
   authenticate,
   authorize(ADMIN),
-  curriculumIdValidation(),
-  deleteCurriculum,
+  deleteAllCurriculumAndOverview,
 );
 
 export default router;

@@ -4,14 +4,10 @@ import {
   getCourseByIdService,
   updateCourseService,
   deleteCourseService,
-  getCourseCurriculumService,
-  createCurriculumService,
-  updateCurriculumService,
-  deleteCurriculumService,
+  deleteAllCurriculumAndOverviewService,
 } from "../services/course.service.js";
 import ApiError from "../utils/ApiError.js";
 import { courseSerializer } from "../serializers/course.serializer.js";
-import { curriculumSerializer } from "../serializers/curriculum.serializer.js";
 
 export const getAllCourses = async (req, res, next) => {
   try {
@@ -84,51 +80,14 @@ export const deleteCourse = async (req, res, next) => {
   }
 };
 
-// Curriculum
-export const getCourseCurriculum = async (req, res, next) => {
+export const deleteAllCurriculumAndOverview = async (req, res, next) => {
   try {
-    const { courseId } = req.params;
-    const result = await getCourseCurriculumService(courseId, req.query);
-    result.data = result.data.map(curriculumSerializer);
-    res.json({ success: true, ...result });
-  } catch (err) {
-    next(err);
-  }
-};
-
-export const createCurriculum = async (req, res, next) => {
-  try {
-    const { courseId } = req.params;
-    const curriculum = await createCurriculumService(courseId, req.body);
-    const serialized = curriculumSerializer(curriculum);
-    res
-      .status(201)
-      .json({ success: true, message: "Curriculum created", data: serialized });
-  } catch (err) {
-    next(err);
-  }
-};
-
-export const updateCurriculum = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const curriculum = await updateCurriculumService(id, req.body);
-    const serialized = curriculumSerializer(curriculum);
+    const result = await deleteAllCurriculumAndOverviewService(req.user.id);
     res.json({
       success: true,
-      message: "Curriculum updated",
-      data: serialized,
+      message: "All curriculum and overview deleted",
+      ...result,
     });
-  } catch (err) {
-    next(err);
-  }
-};
-
-export const deleteCurriculum = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    await deleteCurriculumService(id);
-    res.json({ success: true, message: "Curriculum deleted" });
   } catch (err) {
     next(err);
   }

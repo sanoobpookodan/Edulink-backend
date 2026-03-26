@@ -209,133 +209,22 @@ export const deleteCourseService = async (id, userId) => {
   });
 };
 
-// Curriculum
-export const getCourseCurriculumService = async (courseId, query = {}) => {
-  const course = await prisma.course.findUnique({
-    where: { id: courseId },
-  });
-
-  if (!course) {
-    throw new ApiError(404, "Course not found");
-  }
-
-  const { skip, take, orderBy, meta, where } = buildQueryOptions({
-    query,
-    allowedSortFields: ["createdAt", "title"],
-  });
-
-  where.courseId = courseId;
-  where.isDeleted = false;
-
-  const [curriculum, total] = await Promise.all([
-    prisma.curriculum.findMany({
-      where,
-      include: { lessons: true },
-      orderBy,
-      skip,
-      take,
-    }),
-    prisma.curriculum.count({ where }),
-  ]);
-
-  return {
-    data: curriculum,
-    meta: {
-      ...meta,
-      total,
-      totalPages: Math.ceil(total / meta.limit),
-    },
-  };
-};
-
-export const createCurriculumService = async (courseId, data) => {
-  const course = await prisma.course.findUnique({
-    where: { id: courseId },
-  });
-
-  if (!course) {
-    throw new ApiError(404, "Course not found");
-  }
-
+export const deleteAllCurriculumAndOverviewService = async (userId) => {
   return await prisma.$transaction(async (tx) => {
-    const curriculum = await tx.curriculum.create({
+    const deletedCurriculum = await tx.curriculum.deleteMany({
+      where: { isDeleted: false },
+    });
+
+    const deletedOverview = await tx.overview.deleteMany({
+      where: { isDeleted: false },
+    });
+
+    return {
+      success: true,
       data: {
-        title: data.title,
-        courseId: courseId,
-        ...(Array.isArray(data.lessons) && data.lessons.length > 0
-          ? {
-              lessons: {
-                create: data.lessons.map((lesson) => ({
-                  title: lesson.title,
-                  duration: lesson.duration,
-                })),
-              },
-            }
-          : {}),
+        curriculumDeleted: deletedCurriculum.count,
+        overviewDeleted: deletedOverview.count,
       },
-      include: { lessons: true },
-    });
-
-    if (Array.isArray(data.overview) && data.overview.length > 0) {
-      await tx.overview.createMany({
-        data: data.overview.map((item) => ({
-          courseId: courseId,
-          title: item,
-        })),
-      });
-    }
-
-    curriculum.overview = await tx.overview.findMany({
-      where: { courseId, isDeleted: false },
-    });
-
-    return curriculum;
-  });
-};
-
-export const updateCurriculumService = async (id, data) => {
-  const curriculum = await prisma.curriculum.findUnique({
-    where: { id, isDeleted: false },
-  });
-
-  if (!curriculum) {
-    throw new ApiError(404, "Curriculum not found");
-  }
-
-  return await prisma.curriculum.update({
-    where: { id },
-    data: {
-      title: data.title ?? curriculum.title,
-      ...(Array.isArray(data.lessons)
-        ? {
-            lessons: {
-              deleteMany: {},
-              create: data.lessons.map((lesson) => ({
-                title: lesson.title,
-                duration: lesson.duration,
-              })),
-            },
-          }
-        : {}),
-    },
-    include: { lessons: true },
-  });
-};
-
-export const deleteCurriculumService = async (id, userId) => {
-  const curriculum = await prisma.curriculum.findUnique({
-    where: { id, isDeleted: false },
-  });
-
-  if (!curriculum) {
-    throw new ApiError(404, "Curriculum not found");
-  }
-
-  return await prisma.curriculum.update({
-    where: { id },
-    data: {
-      isDeleted: true,
-      updatedById: userId,
-    },
+    };
   });
 };
