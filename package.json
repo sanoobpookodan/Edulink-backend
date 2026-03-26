@@ -10,8 +10,8 @@
     "jira:create": "node scripts/jira.js create",
     "show:folder": "tree -d -L 4 src/app -I \"node_modules|.git|dist|public\" | pbcopy",
     "show:files": "tree -L 4 src/app -I \"node_modules|.git|dist|public\" | pbcopy",
-    "build": "echo build step",
-    "migrate": "prisma migrate deploy"
+    "build": "prisma generate",
+    "postinstall": "prisma generate"
   },
   "type": "module",
   "keywords": [],
