@@ -37,6 +37,11 @@ app.use(
 );
 app.use(optionalAuth);
 // Routes
+app.use("/", (req, res, next) => {
+  res.json({
+    message: "Edulink Dash board",
+  });
+});
 app.use("/api/auth", authRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/instructors", instructorRoutes);

@@ -200,7 +200,9 @@ export const PaymentStatus: typeof $Enums.PaymentStatus
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Users
  * const users = await prisma.user.findMany()
  * ```
@@ -221,7 +223,9 @@ export class PrismaClient<
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Users
    * const users = await prisma.user.findMany()
    * ```
@@ -530,8 +534,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.4.1
-   * Query Engine version: 55ae170b1ced7fc6ed07a15f110549408c501bb3
+   * Prisma Client JS version: 7.4.2
+   * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
    */
   export type PrismaVersion = {
     client: string
@@ -18903,7 +18907,7 @@ export namespace Prisma {
     title: string
     description: string
     status: $Enums.Status
-    image: string | null
+    image: string
     createdById: string | null
     updatedById: string | null
     isDeleted: boolean
@@ -18990,7 +18994,7 @@ export namespace Prisma {
       title: string
       description: string
       status: $Enums.Status
-      image: string | null
+      image: string
       createdById: string | null
       updatedById: string | null
       isDeleted: boolean
@@ -23426,7 +23430,7 @@ export namespace Prisma {
     title?: StringFilter<"Spotlight"> | string
     description?: StringFilter<"Spotlight"> | string
     status?: EnumStatusFilter<"Spotlight"> | $Enums.Status
-    image?: StringNullableFilter<"Spotlight"> | string | null
+    image?: StringFilter<"Spotlight"> | string
     createdById?: StringNullableFilter<"Spotlight"> | string | null
     updatedById?: StringNullableFilter<"Spotlight"> | string | null
     isDeleted?: BoolFilter<"Spotlight"> | boolean
@@ -23439,7 +23443,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
-    image?: SortOrderInput | SortOrder
+    image?: SortOrder
     createdById?: SortOrderInput | SortOrder
     updatedById?: SortOrderInput | SortOrder
     isDeleted?: SortOrder
@@ -23455,7 +23459,7 @@ export namespace Prisma {
     title?: StringFilter<"Spotlight"> | string
     description?: StringFilter<"Spotlight"> | string
     status?: EnumStatusFilter<"Spotlight"> | $Enums.Status
-    image?: StringNullableFilter<"Spotlight"> | string | null
+    image?: StringFilter<"Spotlight"> | string
     createdById?: StringNullableFilter<"Spotlight"> | string | null
     updatedById?: StringNullableFilter<"Spotlight"> | string | null
     isDeleted?: BoolFilter<"Spotlight"> | boolean
@@ -23468,7 +23472,7 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
-    image?: SortOrderInput | SortOrder
+    image?: SortOrder
     createdById?: SortOrderInput | SortOrder
     updatedById?: SortOrderInput | SortOrder
     isDeleted?: SortOrder
@@ -23487,7 +23491,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Spotlight"> | string
     description?: StringWithAggregatesFilter<"Spotlight"> | string
     status?: EnumStatusWithAggregatesFilter<"Spotlight"> | $Enums.Status
-    image?: StringNullableWithAggregatesFilter<"Spotlight"> | string | null
+    image?: StringWithAggregatesFilter<"Spotlight"> | string
     createdById?: StringNullableWithAggregatesFilter<"Spotlight"> | string | null
     updatedById?: StringNullableWithAggregatesFilter<"Spotlight"> | string | null
     isDeleted?: BoolWithAggregatesFilter<"Spotlight"> | boolean
@@ -24792,7 +24796,7 @@ export namespace Prisma {
     title: string
     description: string
     status?: $Enums.Status
-    image?: string | null
+    image: string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -24805,7 +24809,7 @@ export namespace Prisma {
     title: string
     description: string
     status?: $Enums.Status
-    image?: string | null
+    image: string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -24818,7 +24822,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -24831,7 +24835,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -24844,7 +24848,7 @@ export namespace Prisma {
     title: string
     description: string
     status?: $Enums.Status
-    image?: string | null
+    image: string
     createdById?: string | null
     updatedById?: string | null
     isDeleted?: boolean
@@ -24857,7 +24861,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
@@ -24870,7 +24874,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: StringFieldUpdateOperationsInput | string
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     updatedById?: NullableStringFieldUpdateOperationsInput | string | null
     isDeleted?: BoolFieldUpdateOperationsInput | boolean
