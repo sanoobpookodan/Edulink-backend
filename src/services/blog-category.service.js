@@ -3,32 +3,15 @@ import ApiError from "../utils/ApiError.js";
 import { buildQueryOptions } from "../utils/queryBuilder.js";
 import toSlug from "../utils/toSlug.js";
 
-export const getAllBlogCategoriesService = async (query = {}) => {
-  const { skip, take, orderBy, meta, where } = buildQueryOptions({
-    query,
-    allowedSortFields: ["createdAt", "name"],
-    defaultSortField: "createdAt",
+export const getAllBlogCategoriesService = async () => {
+  const categories = await prisma.blogCategory.findMany({
+    orderBy: {
+      slug: "asc",
+    },
   });
-
-  delete where.isDeleted;
-
-  const [categories, total] = await Promise.all([
-    prisma.blogCategory.findMany({
-      where,
-      orderBy,
-      skip,
-      take,
-    }),
-    prisma.blogCategory.count({ where }),
-  ]);
 
   return {
     data: categories,
-    meta: {
-      ...meta,
-      total,
-      totalPages: Math.ceil(total / meta.limit),
-    },
   };
 };
 

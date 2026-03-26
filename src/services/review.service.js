@@ -41,10 +41,6 @@ export const createReviewService = async (
       courseId: courseId,
       studentId: student.id,
     },
-    include: {
-      student: { include: { user: true } },
-      course: true,
-    },
   });
 };
 
@@ -67,10 +63,6 @@ export const getCourseReviewsService = async (
   const [reviews, total] = await Promise.all([
     prisma.review.findMany({
       where: { courseId: courseId },
-      include: {
-        student: { include: { user: true } },
-        course: true,
-      },
       orderBy: { createdAt: "desc" },
       skip,
       take: safeLimit,
@@ -115,5 +107,36 @@ export const deleteReviewService = async (id, currentUser) => {
 
   return await prisma.review.delete({
     where: { id },
+  });
+};
+
+export const updateReviewService = async (id, data, currentUser) => {
+  const review = await prisma.review.findUnique({
+    where: { id },
+    include: { student: true },
+  });
+
+  if (!review) {
+    throw new ApiError(404, "Review not found");
+  }
+
+  // Check if user is the review author or admin
+  if (
+    review.student.userId !== currentUser?.id &&
+    currentUser?.role !== "ADMIN"
+  ) {
+    throw new ApiError(403, "You can only update your own reviews");
+  }
+
+  return await prisma.review.update({
+    where: { id },
+    data: {
+      rating: data.rating ?? review.rating,
+      comment: data.comment ?? review.comment,
+    },
+    include: {
+      student: { include: { user: true } },
+      course: true,
+    },
   });
 };

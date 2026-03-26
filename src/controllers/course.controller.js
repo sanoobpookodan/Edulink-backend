@@ -24,7 +24,6 @@ const createCourse = async (req, res, next) => {
     const imagePath = req.fileUrl || undefined;
     const course = await createCourseService(req.body, req.user.id, imagePath);
     const serialized = courseSerializer(course);
-
     res.status(201).json({ success: true, data: serialized });
   } catch (err) {
     next(err);

@@ -5,6 +5,7 @@ import {
   getBlogByIdService,
   updateBlogService,
   deleteBlogService,
+  getAllTagsService,
 } from "../services/blog.service.js";
 import { blogSerializer } from "../serializers/blog.serializer.js";
 
@@ -61,6 +62,15 @@ export const deleteBlog = async (req, res, next) => {
   try {
     await deleteBlogService(req.params.id, req.user.id);
     res.json({ success: true, message: "Blog deleted" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getAllTags = async (req, res, next) => {
+  try {
+    const result = await getAllTagsService();
+    res.json({ success: true, ...result });
   } catch (err) {
     next(err);
   }

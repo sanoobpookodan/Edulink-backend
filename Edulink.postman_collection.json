@@ -699,8 +699,8 @@
                   "type": "text"
                 },
                 {
-                  "key": "tags",
-                  "value": "javascript,tips",
+                  "key": "tagIds",
+                  "value": "[\"550e8400-e29b-41d4-a716-446655440000\",\"550e8400-e29b-41d4-a716-446655440001\"]",
                   "type": "text"
                 }
               ]
@@ -743,6 +743,11 @@
                 {
                   "key": "title",
                   "value": "Updated Blog Title",
+                  "type": "text"
+                },
+                {
+                  "key": "tagIds",
+                  "value": "[\"550e8400-e29b-41d4-a716-446655440000\"]",
                   "type": "text"
                 }
               ]

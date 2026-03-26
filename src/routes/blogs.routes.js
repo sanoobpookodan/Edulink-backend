@@ -8,6 +8,7 @@ import {
   getBlogById,
   updateBlog,
   deleteBlog,
+  getAllTags,
 } from "../controllers/blog.controller.js";
 import {
   createBlogValidation,
@@ -19,6 +20,8 @@ const router = express.Router();
 const uploadBlog = createUploader("blogs");
 
 router.get("/", getAllBlogs);
+
+router.get("/tags", getAllTags);
 
 router.post(
   "/",

@@ -3,30 +3,18 @@ import ApiError from "../utils/ApiError.js";
 import { buildQueryOptions } from "../utils/queryBuilder.js";
 import toSlug from "../utils/toSlug.js";
 
-export const getAllCourseCategoriesService = async (query = {}) => {
-  const { skip, take, orderBy, meta, where } = buildQueryOptions({
-    query,
-    allowedSortFields: ["createdAt", "name", "slug"],
-    defaultSortField: "createdAt",
+export const getAllCourseCategoriesService = async () => {
+  const categories = await prisma.courseCategory.findMany({
+    where: {
+      isDeleted: false,
+    },
+    orderBy: {
+      name: "asc",
+    },
   });
-
-  const [categories, total] = await Promise.all([
-    prisma.courseCategory.findMany({
-      where,
-      orderBy,
-      skip,
-      take,
-    }),
-    prisma.courseCategory.count({ where }),
-  ]);
 
   return {
     data: categories,
-    meta: {
-      ...meta,
-      total,
-      totalPages: Math.ceil(total / meta.limit),
-    },
   };
 };
 
@@ -64,7 +52,12 @@ export const getCourseCategoryByIdService = async (id) => {
   return category;
 };
 
-export const updateCourseCategoryService = async (id, data, imagePath, userId) => {
+export const updateCourseCategoryService = async (
+  id,
+  data,
+  imagePath,
+  userId,
+) => {
   const category = await prisma.courseCategory.findUnique({
     where: { id, isDeleted: false },
   });

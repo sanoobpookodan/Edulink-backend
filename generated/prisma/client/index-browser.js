@@ -240,11 +240,12 @@ exports.Prisma.BlogScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.BlogTagScalarFieldEnum = {
+exports.Prisma.TagScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
-  blogId: 'blogId'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.EnrollmentScalarFieldEnum = {
@@ -378,7 +379,7 @@ exports.Prisma.ModelName = {
   Lesson: 'Lesson',
   BlogCategory: 'BlogCategory',
   Blog: 'Blog',
-  BlogTag: 'BlogTag',
+  Tag: 'Tag',
   Enrollment: 'Enrollment',
   Payment: 'Payment',
   Review: 'Review',

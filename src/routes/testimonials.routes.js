@@ -21,7 +21,7 @@ router.get("/", getAllTestimonials);
 router.post(
   "/",
   authenticate,
-  authorize(STUDENT),
+  authorize(STUDENT, ADMIN),
   createTestimonialValidation(),
   createTestimonial,
 );
@@ -31,7 +31,7 @@ router.get("/:id", testimonialIdValidation(), getTestimonialById);
 router.patch(
   "/:id",
   authenticate,
-  authorize(STUDENT, ADMIN),
+  authorize(STUDENT),
   testimonialIdValidation(),
   updateTestimonialValidation(),
   updateTestimonial,

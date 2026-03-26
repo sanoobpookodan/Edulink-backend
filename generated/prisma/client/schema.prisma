@@ -200,7 +200,7 @@ model Lesson {
   duration String
 
   curriculumId String
-  curriculum   Curriculum @relation(fields: [curriculumId], references: [id])
+  curriculum   Curriculum @relation(fields: [curriculumId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -229,7 +229,7 @@ model Blog {
   slug        String        @unique
   description String
   content     String
-  image       String?
+  image       String
   status      PublishStatus @default(DRAFT)
 
   categoryId String
@@ -242,16 +242,18 @@ model Blog {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  blogTags BlogTag[]
+  tags Tag[]
 }
 
-model BlogTag {
+model Tag {
   id   String @id @default(uuid())
   name String @unique
   slug String @unique
 
-  blogId String
-  blog   Blog   @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  blogs Blog[]
 }
 
 //

@@ -10,9 +10,9 @@ import { courseCategorySerializer } from "../serializers/course-category.seriali
 
 export const getAllCourseCategories = async (req, res, next) => {
   try {
-    const result = await getAllCourseCategoriesService(req.query);
+    const result = await getAllCourseCategoriesService();
     result.data = result.data.map(courseCategorySerializer);
-    res.json({ success: true, ...result });
+    res.json({ success: true, data: result.data });
   } catch (err) {
     next(err);
   }

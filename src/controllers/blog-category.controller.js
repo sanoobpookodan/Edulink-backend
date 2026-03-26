@@ -10,9 +10,9 @@ import { blogCategorySerializer } from "../serializers/blog-category.serializer.
 
 export const getAllBlogCategories = async (req, res, next) => {
   try {
-    const result = await getAllBlogCategoriesService(req.query);
+    const result = await getAllBlogCategoriesService();
     result.data = result.data.map(blogCategorySerializer);
-    res.json({ success: true, ...result });
+    res.json({ success: true, data: result.data });
   } catch (err) {
     next(err);
   }
@@ -22,13 +22,11 @@ export const createBlogCategory = async (req, res, next) => {
   try {
     const data = await createBlogCategoryService(req.body);
     const serialized = blogCategorySerializer(data);
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Blog category created",
-        data: serialized,
-      });
+    res.status(201).json({
+      success: true,
+      message: "Blog category created",
+      data: serialized,
+    });
   } catch (err) {
     next(err);
   }

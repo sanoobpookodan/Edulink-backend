@@ -14,8 +14,8 @@ export const blogSerializer = (blog) => {
           slug: blog.category.slug,
         }
       : null,
-    blogTags: Array.isArray(blog.blogTags)
-      ? blog.blogTags.map((tag) => ({
+    tags: Array.isArray(blog.tags)
+      ? blog.tags.map((tag) => ({
           id: tag.id,
           name: tag.name,
           slug: tag.slug,

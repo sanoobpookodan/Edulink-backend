@@ -53,10 +53,10 @@ app.use("/api/course-categories", courseCategoryRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/curriculum", curriculumRoutes);
 app.use("/api/overview", overviewRoutes);
-// app.use("/api/blog-categories", blogCategoryRoutes);
-// app.use("/api/blogs", blogRoutes);
-// app.use("/api/testimonials", testimonialRoutes);
-// app.use("/api/reviews", reviewRoutes);
+app.use("/api/blog-categories", blogCategoryRoutes);
+app.use("/api/blogs", blogRoutes);
+app.use("/api/testimonials", testimonialRoutes);
+app.use("/api/reviews", reviewRoutes);
 // app.use("/api/jira", jiraRoutes);
 
 // 404 handler

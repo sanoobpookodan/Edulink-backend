@@ -24,11 +24,24 @@ export const createCourseService = async (data, userId, imagePath) => {
     }
     throw new ApiError(404, "Instructor not found");
   }
+
+  const slug = data.slug || toSlug(data.title);
+  const existingCourse = await prisma.course.findUnique({
+    where: { slug },
+  });
+
+  if (existingCourse) {
+    if (imagePath) {
+      await deleteLocalFile(imagePath);
+    }
+    throw new ApiError(400, "Course with this slug already exists");
+  }
+
   try {
     return prisma.course.create({
       data: {
         title: data.title,
-        slug: data.slug || toSlug(data.title),
+        slug,
         description: data.description,
         content: data.content,
         duration: data.duration,
@@ -42,8 +55,6 @@ export const createCourseService = async (data, userId, imagePath) => {
       include: { instructor: true, category: true },
     });
   } catch (error) {
-    console.log(error.message);
-
     if (imagePath) {
       await deleteLocalFile(imagePath);
     }
@@ -162,6 +173,21 @@ export const updateCourseService = async (id, data, userId, imagePath) => {
     }
   }
 
+  const nextSlug = data.slug ?? (data.title ? toSlug(data.title) : course.slug);
+
+  if (nextSlug !== course.slug) {
+    const existingCourse = await prisma.course.findUnique({
+      where: { slug: nextSlug },
+    });
+
+    if (existingCourse) {
+      if (imagePath) {
+        await deleteLocalFile(imagePath);
+      }
+      throw new ApiError(400, "Course with this slug already exists");
+    }
+  }
+
   if (imagePath && course.image) {
     oldImage = course.image;
   }
@@ -170,7 +196,7 @@ export const updateCourseService = async (id, data, userId, imagePath) => {
     where: { id },
     data: {
       title: data.title ?? course.title,
-      slug: data.slug ?? (data.title ? toSlug(data.title) : course.slug),
+      slug: nextSlug,
       description: data.description ?? course.description,
       content: data.content ?? course.content,
       duration: data.duration ?? course.duration,
