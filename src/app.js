@@ -15,7 +15,7 @@ import testimonialRoutes from "./routes/testimonials.routes.js";
 import reviewRoutes from "./routes/reviews.routes.js";
 import spotlightRoutes from "./routes/spotlights.routes.js";
 import aboutRoutes from "./routes/about.routes.js";
-import jiraRoutes from "./module/jira/route/jira.routes.js";
+// import jiraRoutes from "./module/jira/route/jira.routes.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import notFoundMiddleware from "./middlewares/not-found.middleware.js";
 import { optionalAuth } from "./middlewares/auth.middleware.js";
@@ -53,7 +53,7 @@ app.use("/api/courses", courseRoutes);
 // app.use("/api/blogs", blogRoutes);
 // app.use("/api/testimonials", testimonialRoutes);
 // app.use("/api/reviews", reviewRoutes);
-app.use("/api/jira", jiraRoutes);
+// app.use("/api/jira", jiraRoutes);
 
 // 404 handler
 app.use(notFoundMiddleware);
